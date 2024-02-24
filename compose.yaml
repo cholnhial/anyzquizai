@@ -11,7 +11,7 @@ services:
   mariadb:
     image: 'mariadb:latest'
     environment:
-      - 'MARIADB_DATABASE=anyquizai'
+      - 'MARIADB_DATABASE=anyquizaidb'
       - 'MARIADB_PASSWORD=root'
       - 'MARIADB_ROOT_PASSWORD=root'
       - 'MARIADB_USER=root'

@@ -34,7 +34,7 @@ CREATE TABLE answer (
                         FOREIGN KEY (question_id) REFERENCES question(id)
 );
 
-CREATE TABLE leaderboard (
+CREATE TABLE score (
                              id BIGINT(20) PRIMARY KEY,
                              quiz_id BIGINT(20),
                              country_code VARCHAR(255) NOT NULL,

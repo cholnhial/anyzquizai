@@ -1,6 +1,7 @@
 package dev.chol.anyquizai.domain;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,8 @@ import lombok.Setter;
 @Table
 @Getter
 @Setter
-public class Leaderboard {
+@EqualsAndHashCode(of = {"nickName"})
+public class Score {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

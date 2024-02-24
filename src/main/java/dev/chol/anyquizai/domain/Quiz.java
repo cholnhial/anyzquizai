@@ -2,6 +2,7 @@ package dev.chol.anyquizai.domain;
 
 import dev.chol.anyquizai.domain.enumeration.Difficulty;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.time.ZonedDateTime;
 @Table
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"uniqueCode"})
 public class Quiz {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
