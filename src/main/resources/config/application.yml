@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: AnyQuizAI
+  profiles:
+    active: '@spring.profiles.active@'
+  datasource:
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  main:
+    allow-bean-definition-overriding: true
