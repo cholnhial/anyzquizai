@@ -3,5 +3,5 @@ AnyQuizAI lets users generate a quiz of any topic which they can make available 
 
 ## Why 
 
-This project demonstrates a breadth of my FullStack skills across different techniques. I wanted to use it as an opportunity to try out new technologies such as Spring AI and new language enhancements introduced to Java.
+This project demonstrates a breadth of my FullStack skills across different tools and emerging technologies. I wanted to use it as an opportunity to try out new technologies such as Spring AI and new language enhancements introduced to Java.
 
