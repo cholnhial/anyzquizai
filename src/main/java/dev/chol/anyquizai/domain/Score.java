@@ -23,7 +23,7 @@ public class Score {
     private String nickName;
 
     @Column
-    private Long totalCorrect;
+    private Integer totalCorrect;
 
     @Column
     private Float score;

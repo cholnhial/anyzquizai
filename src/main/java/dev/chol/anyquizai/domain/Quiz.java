@@ -26,7 +26,7 @@ public class Quiz {
     private String title;
 
     @Column
-    private Long totalQuestions;
+    private Integer totalQuestions;
 
     @Column
     @Enumerated(EnumType.STRING)

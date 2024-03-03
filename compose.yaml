@@ -12,8 +12,8 @@ services:
     image: 'mariadb:latest'
     environment:
       - 'MARIADB_DATABASE=anyquizaidb'
-      - 'MARIADB_PASSWORD=root'
-      - 'MARIADB_ROOT_PASSWORD=root'
-      - 'MARIADB_USER=root'
+      - 'MARIADB_PASSWORD=secret'
+      - 'MARIADB_ROOT_PASSWORD=verysecret'
+      - 'MARIADB_USER=myuser'
     ports:
-      - '3306'
+      - '3307:3306'

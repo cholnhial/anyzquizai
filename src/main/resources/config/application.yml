@@ -8,3 +8,5 @@ spring:
       ddl-auto: validate
 
     open-in-view: false
+  ai:
+    openai.api-key: ${OPENAI_API_KEY}
