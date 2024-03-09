@@ -1,18 +1,23 @@
 package dev.chol.anyquizai.domain;
 
 import dev.chol.anyquizai.domain.enumeration.Difficulty;
+import dev.chol.anyquizai.dto.AnswerDTO;
+import dev.chol.anyquizai.dto.QuestionDTO;
+import dev.chol.anyquizai.dto.QuizDTO;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Entity
 @Table
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"uniqueCode"})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Quiz {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +39,21 @@ public class Quiz {
 
     @Column
     private ZonedDateTime created;
+
+    @OneToMany(mappedBy = "quiz")
+    private Set<Question> questions;
+
+    @OneToMany(mappedBy = "quiz")
+    private Set<Score> scores;
+
+    @OneToOne
+    private Category category;
+
+    public QuizDTO toDTO() {
+        return new QuizDTO(id,category.getId(), title, totalQuestions, difficulty, questions.stream()
+                .map(question -> new QuestionDTO(question.getTitle(),
+                        question.getCorrectAnswerLetter(),
+                        question.getAnswers().stream()
+                        .map(answer -> new AnswerDTO(answer.getLetter(), answer.getTitle())).toList())).toList());
+    }
 }

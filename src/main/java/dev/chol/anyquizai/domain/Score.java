@@ -1,20 +1,24 @@
 package dev.chol.anyquizai.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"nickName"})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Score {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+
+    @ManyToOne
+    private Quiz quiz;
 
     @Column
     private String countryCode;

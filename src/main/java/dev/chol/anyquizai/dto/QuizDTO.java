@@ -1,16 +1,25 @@
 package dev.chol.anyquizai.dto;
 
+import dev.chol.anyquizai.domain.Category;
+import dev.chol.anyquizai.domain.Quiz;
 import dev.chol.anyquizai.domain.enumeration.Difficulty;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Getter
-@Setter
-public class QuizDTO {
-    private String title;
-    private Integer numberOfQuestions;
-    private Difficulty difficulty;
-    private List<QuestionDTO> questions;
+public record QuizDTO(Long id, Long categoryId, String title, Integer numberOfQuestions, Difficulty difficulty, List<QuestionDTO> questions) {
+
+    public Quiz toQuiz(Category category) {
+        return Quiz.builder()
+                .title(title)
+                .uniqueCode(RandomStringUtils.randomAlphanumeric(6))
+                .category(category)
+                .totalQuestions(numberOfQuestions)
+                .difficulty(difficulty)
+                .questions(questions.stream().map(QuestionDTO::toQuestion).collect(Collectors.toSet()))
+                .build();
+    }
 }

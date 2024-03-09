@@ -1,13 +1,13 @@
 package dev.chol.anyquizai.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import dev.chol.anyquizai.domain.Answer;
 
-@Getter
-@Setter
-public class AnswerDTO {
-    private String answerLetter;
-    private String answerTitle;
+public record AnswerDTO (String answerLetter, String answerTitle){
 
-    private Boolean isCorrectAnswer;
+    public Answer toAnswer() {
+        return Answer.builder()
+                .letter(answerLetter)
+                .title(answerTitle)
+                .build();
+    }
 }

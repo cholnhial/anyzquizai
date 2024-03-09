@@ -1,14 +1,17 @@
 package dev.chol.anyquizai.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import dev.chol.anyquizai.domain.Question;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Getter
-@Setter
-public class QuestionDTO {
-    private String question;
+public record QuestionDTO (String question, String correctAnswerLetter, List<AnswerDTO> answers) {
 
-    private List<AnswerDTO> answers;
+    public Question toQuestion() {
+        return  Question.builder()
+                .correctAnswerLetter(correctAnswerLetter)
+                .title(question)
+                .answers(answers.stream().map(AnswerDTO::toAnswer).collect(Collectors.toSet()))
+                .build();
+    }
 }
