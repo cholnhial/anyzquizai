@@ -30,14 +30,14 @@ public class QuizService {
      * Save a generated quiz for a given category and generate its photo and save it to disk
      *
      * @param quizDto the newly generated quiz to save
-     * @param categoryId the category to save it to
+     * @param categoryId the category to save the quiz under
      * @return an entity persisted of the new quiz
      */
     @Transactional
     public Quiz saveQuizForCategory(QuizDTO quizDto, Long categoryId) {
         Category category = categoryService.getCategoryById(categoryId);
         Quiz quiz = quizRepository.save(quizDto.toQuiz(category));
-        byte[] photoBytes = aiImageGeneratorService.generateImage("Generate of: " + quizDto.title(), applicationProperties.quizPhotoWidth(),
+        byte[] photoBytes = aiImageGeneratorService.generateImage(quizDto.thumbnailGenerationPrompt(), applicationProperties.quizPhotoWidth(),
                 applicationProperties.quizPhotoHeight());
         String quizPhotoPath = "%s/%d.png".formatted(applicationProperties.quizPhotosPath(), quiz.getId());
         savePhoto(quizPhotoPath, photoBytes);

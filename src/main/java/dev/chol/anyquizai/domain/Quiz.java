@@ -60,7 +60,7 @@ public class Quiz {
                 .map(question -> new QuestionDTO(question.getTitle(),
                         question.getCorrectAnswerLetter(),
                         question.getAnswers().stream()
-                        .map(answer -> new AnswerDTO(answer.getLetter(), answer.getTitle())).toList())).toList());
+                        .map(answer -> new AnswerDTO(answer.getLetter(), answer.getTitle())).toList())).toList(),"");
     }
 
     public byte[] getPhotoInBytes() throws IOException {
