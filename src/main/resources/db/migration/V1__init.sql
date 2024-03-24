@@ -9,6 +9,7 @@ CREATE TABLE quiz (
                       category_id BIGINT(20),
                       title VARCHAR(255) NOT NULL,
                       total_questions INT,
+                      photo_path VARCHAR(255),
                       difficulty ENUM('EASY', 'MEDIUM', 'HARD') NOT NULL, -- Specify the possible enum values
                       created DATETIME,
                       INDEX idx_category_id (category_id),

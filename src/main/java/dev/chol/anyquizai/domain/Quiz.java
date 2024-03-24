@@ -7,6 +7,9 @@ import dev.chol.anyquizai.dto.QuizDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -29,6 +32,9 @@ public class Quiz {
 
     @Column
     private String title;
+
+    @Column
+    private String photoPath;
 
     @Column
     private Integer totalQuestions;
@@ -55,5 +61,9 @@ public class Quiz {
                         question.getCorrectAnswerLetter(),
                         question.getAnswers().stream()
                         .map(answer -> new AnswerDTO(answer.getLetter(), answer.getTitle())).toList())).toList());
+    }
+
+    public byte[] getPhotoInBytes() throws IOException {
+        return Files.readAllBytes(Paths.get(photoPath));
     }
 }

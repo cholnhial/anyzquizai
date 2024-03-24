@@ -1,7 +1,7 @@
 package dev.chol.anyquizai.service;
 
-import dev.chol.anyquizai.CategoryNotFound;
 import dev.chol.anyquizai.domain.Category;
+import dev.chol.anyquizai.exception.CategoryNotFoundException;
 import dev.chol.anyquizai.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class CategoryService {
 
     public Category getCategoryById(Long id) {
         return this.categoryRepository.findById(id).orElseThrow(() ->
-                new CategoryNotFound(id));
+                new CategoryNotFoundException(id));
     }
 
     public List<Category> getAll() {

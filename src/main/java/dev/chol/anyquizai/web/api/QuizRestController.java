@@ -1,5 +1,6 @@
 package dev.chol.anyquizai.web.api;
 
+import dev.chol.anyquizai.domain.Quiz;
 import dev.chol.anyquizai.dto.QuizCreationRequestDTO;
 import dev.chol.anyquizai.dto.QuizDTO;
 import dev.chol.anyquizai.service.AIQuizGeneratorService;
@@ -11,12 +12,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -28,6 +30,15 @@ public class QuizRestController {
     private final AIQuizGeneratorService quizGeneratorService;
     private final QuizService quizService;
 
+    /**
+     * {@code POST /api/quiz} : Generates a new quiz
+     *
+     * @param creationRequestDTO a body containing the quiz to generate
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with a body containing the new generated quiz
+     * or with status {@code 404 (Not Found} if category couldn't be found
+     * or with status {@code 500 (Internal Server Error)} if Generative AI API failed to generate
+     * @throws URISyntaxException if the location URI syntax is incorrect
+     */
     @PostMapping
     @Operation(summary = "Generate Quiz")
     @ApiResponses(value = {
@@ -43,5 +54,47 @@ public class QuizRestController {
                 creationRequestDTO.difficulty(), creationRequestDTO.numberOfQuestions());
         var quiz = this.quizService.saveQuizForCategory(quizDto, creationRequestDTO.categoryId());
         return ResponseEntity.created(new URI("/api/quiz/" + quiz.getId())).body(quiz.toDTO());
+    }
+
+    /**
+     * {@code GET /api/quiz/:id} : Retrieves a quiz
+     *
+     * @param id the id of the quiz to retrieve
+     * @return {@link ResponseEntity} with status {@code 200 (OK)} and with the body of retrieved quiz
+     * or with status {@code 404 (Not Found)} if the quiz identified by the id provided couldn't be found
+     */
+    @Operation(summary = "Get a quiz by its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the quiz",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = QuizDTO.class)) }),
+            @ApiResponse(responseCode = "404", description = "Quiz not found",
+                    content = @Content) })
+    @GetMapping("/{id}")
+    public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
+        return ResponseEntity.ok(this.quizService.getQuizById(id).toDTO());
+    }
+
+    /**
+     * {@code GET /api/quiz/:id/photo} : Returns the AI generated thumbnail of the quiz
+     *
+     * @param id the quiz
+     * return ResponseEntity containing the byte array representing the photo, along with appropriate headers and HTTP status
+     * @throws IOException when file cannot be opened or other file system related errors
+     */
+    @GetMapping("/{id}/photo")
+    @Operation(summary = "Get a quiz thumbnail photo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Quiz photo if quiz is found",
+                    content = { @Content(mediaType = "image/png") }),
+            @ApiResponse(responseCode = "404", description = "Quiz not found",
+                    content = @Content) })
+    public ResponseEntity<byte[]> getQuizPhoto(@PathVariable Long id) throws IOException {
+        Quiz quiz = quizService.getQuizById(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        byte[] photoBytes = quiz.getPhotoInBytes();
+        headers.setContentLength(photoBytes.length);
+        return new ResponseEntity<>(photoBytes, headers, HttpStatus.OK);
     }
 }
