@@ -1,9 +1,12 @@
 package dev.chol.anyquizai.web.api;
 
-import dev.chol.anyquizai.domain.Quiz;
+import dev.chol.anyquizai.domain.jpa.Quiz;
 import dev.chol.anyquizai.dto.QuizCreationRequestDTO;
 import dev.chol.anyquizai.dto.QuizDTO;
+import dev.chol.anyquizai.dto.SearchDTO;
+import dev.chol.anyquizai.enumeration.Difficulty;
 import dev.chol.anyquizai.service.AIQuizGeneratorService;
+import dev.chol.anyquizai.service.QuizSearchService;
 import dev.chol.anyquizai.service.QuizService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +36,7 @@ public class QuizRestController {
 
     private final AIQuizGeneratorService quizGeneratorService;
     private final QuizService quizService;
+    private final QuizSearchService quizSearchService;
 
     /**
      * {@code POST /api/quiz} : Generates a new quiz
@@ -73,6 +81,29 @@ public class QuizRestController {
     @GetMapping("/{id}")
     public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
         return ResponseEntity.ok(this.quizService.getQuizById(id).toDTO());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<dev.chol.anyquizai.domain.elasticsearch.Quiz>> getAll(@RequestParam Map<String, String> searchOptions) {
+
+        var searchOptionsBuilder = SearchDTO.builder();
+        if (searchOptions.containsKey("title")) {
+            searchOptionsBuilder.title(searchOptions.get("title"));
+        }
+
+        if (searchOptions.containsKey("categoryId")) {
+            searchOptionsBuilder.categoryId(searchOptions.get("categoryId"));
+        }
+        if (searchOptions.containsKey("difficulty")) {
+            searchOptionsBuilder.sortByDifficulty(Sort.Direction.fromString(searchOptions.get("difficulty")));
+        }
+
+
+        if (searchOptions.containsKey("created")) {
+            searchOptionsBuilder.sortByCreatedDate(Sort.Direction.fromString(searchOptions.get("created")));
+        }
+
+        return ResponseEntity.ok(quizSearchService.processSearch(searchOptionsBuilder.build()));
     }
 
     /**

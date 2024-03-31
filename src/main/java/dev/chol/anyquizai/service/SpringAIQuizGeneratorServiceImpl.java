@@ -1,6 +1,6 @@
 package dev.chol.anyquizai.service;
 
-import dev.chol.anyquizai.domain.enumeration.Difficulty;
+import dev.chol.anyquizai.enumeration.Difficulty;
 import dev.chol.anyquizai.dto.QuizDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.ChatClient;

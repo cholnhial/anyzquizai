@@ -8,7 +8,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  elasticsearch:
+    password: "secret"
+    uris: http://localhost:9200
+    connection-timeout: 300s
   docker:
     compose:
       enabled: false
-

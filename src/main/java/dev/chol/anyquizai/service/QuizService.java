@@ -1,13 +1,15 @@
 package dev.chol.anyquizai.service;
 
 import dev.chol.anyquizai.config.ApplicationProperties;
-import dev.chol.anyquizai.domain.Category;
-import dev.chol.anyquizai.domain.Quiz;
+import dev.chol.anyquizai.domain.jpa.Category;
+import dev.chol.anyquizai.domain.jpa.Quiz;
 import dev.chol.anyquizai.dto.QuizDTO;
+import dev.chol.anyquizai.enumeration.Difficulty;
 import dev.chol.anyquizai.exception.QuizNotFoundException;
 import dev.chol.anyquizai.exception.SavePhotoException;
-import dev.chol.anyquizai.repository.QuizRepository;
+import dev.chol.anyquizai.repository.jpa.QuizRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -24,6 +27,7 @@ public class QuizService {
     private final QuizRepository quizRepository;
     private final CategoryService categoryService;
     private final AIImageGeneratorService aiImageGeneratorService;
+    private final QuizSearchService quizSearchService;
     private final ApplicationProperties applicationProperties;
 
     /**
@@ -42,6 +46,16 @@ public class QuizService {
         String quizPhotoPath = "%s/%d.png".formatted(applicationProperties.quizPhotosPath(), quiz.getId());
         savePhoto(quizPhotoPath, photoBytes);
         quiz.setPhotoPath(quizPhotoPath);
+        var elasticQuizBuilder = dev.chol.anyquizai.domain.elasticsearch.Quiz.builder();
+        elasticQuizBuilder.id(quiz.getId());
+        elasticQuizBuilder.title(quiz.getTitle());
+        elasticQuizBuilder.categoryId(quizDto.categoryId());
+        elasticQuizBuilder.difficulty(quiz.getDifficulty().toString());
+        elasticQuizBuilder.uniqueCode(quiz.getUniqueCode());
+        elasticQuizBuilder.questions(quiz.getTotalQuestions());
+        elasticQuizBuilder.created(quiz.getCreated());
+        elasticQuizBuilder.created(quiz.getCreated());
+        quizSearchService.createQuizIndex(elasticQuizBuilder.build());
         return quiz;
     }
 

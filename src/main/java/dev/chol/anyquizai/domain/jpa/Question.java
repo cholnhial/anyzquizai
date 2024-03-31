@@ -1,27 +1,33 @@
-package dev.chol.anyquizai.domain;
+package dev.chol.anyquizai.domain.jpa;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Table
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"title","correctAnswerLetter"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Answer {
+public class Question {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
     @ManyToOne
-    private Question question;
+    private Quiz quiz;
 
     @Column
     private String title;
 
     @Column
-    private String letter;
+    private String correctAnswerLetter;
+
+    @OneToMany(mappedBy = "question")
+    private Set<Answer> answers;
 }

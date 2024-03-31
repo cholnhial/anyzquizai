@@ -1,4 +1,4 @@
 /**
  * data layer for the application
  */
-package dev.chol.anyquizai.repository;
+package dev.chol.anyquizai.repository.jpa;

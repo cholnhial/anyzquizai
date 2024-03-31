@@ -1,6 +1,6 @@
-package dev.chol.anyquizai.domain;
+package dev.chol.anyquizai.domain.jpa;
 
-import dev.chol.anyquizai.domain.enumeration.Difficulty;
+import dev.chol.anyquizai.enumeration.Difficulty;
 import dev.chol.anyquizai.dto.AnswerDTO;
 import dev.chol.anyquizai.dto.QuestionDTO;
 import dev.chol.anyquizai.dto.QuizDTO;

@@ -1,6 +1,6 @@
 package dev.chol.anyquizai.service;
 
-import dev.chol.anyquizai.domain.enumeration.Difficulty;
+import dev.chol.anyquizai.enumeration.Difficulty;
 import dev.chol.anyquizai.dto.QuizDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

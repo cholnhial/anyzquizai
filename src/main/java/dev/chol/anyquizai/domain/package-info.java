@@ -1,4 +1,4 @@
 /**
- * Entity classes for the application
+ * POJOS for JPA and ElasticSearch
  */
 package dev.chol.anyquizai.domain;

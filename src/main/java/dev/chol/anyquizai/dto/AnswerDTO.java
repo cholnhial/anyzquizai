@@ -1,6 +1,6 @@
 package dev.chol.anyquizai.dto;
 
-import dev.chol.anyquizai.domain.Answer;
+import dev.chol.anyquizai.domain.jpa.Answer;
 
 public record AnswerDTO (String answerLetter, String answerTitle){
 

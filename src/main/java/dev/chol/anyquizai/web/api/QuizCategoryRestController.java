@@ -1,6 +1,6 @@
 package dev.chol.anyquizai.web.api;
 
-import dev.chol.anyquizai.domain.Category;
+import dev.chol.anyquizai.domain.jpa.Category;
 import dev.chol.anyquizai.dto.CategoryDTO;
 import dev.chol.anyquizai.service.CategoryService;
 import lombok.RequiredArgsConstructor;

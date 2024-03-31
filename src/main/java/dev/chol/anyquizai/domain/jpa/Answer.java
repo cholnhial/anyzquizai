@@ -1,6 +1,5 @@
-package dev.chol.anyquizai.domain;
+package dev.chol.anyquizai.domain.jpa;
 
-import dev.chol.anyquizai.dto.CategoryDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,15 +10,18 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
-    @Id
+public class Answer {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
-    @Column
-    private String name;
+    @ManyToOne
+    private Question question;
 
-    public CategoryDTO toDTO () {
-        return new CategoryDTO(id, name);
-    }
+    @Column
+    private String title;
+
+    @Column
+    private String letter;
 }

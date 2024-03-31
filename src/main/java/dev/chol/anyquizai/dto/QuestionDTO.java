@@ -1,6 +1,6 @@
 package dev.chol.anyquizai.dto;
 
-import dev.chol.anyquizai.domain.Question;
+import dev.chol.anyquizai.domain.jpa.Question;
 
 import java.util.List;
 import java.util.stream.Collectors;

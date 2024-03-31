@@ -1,8 +1,8 @@
 package dev.chol.anyquizai.service;
 
-import dev.chol.anyquizai.domain.Category;
+import dev.chol.anyquizai.domain.jpa.Category;
 import dev.chol.anyquizai.exception.CategoryNotFoundException;
-import dev.chol.anyquizai.repository.CategoryRepository;
+import dev.chol.anyquizai.repository.jpa.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
