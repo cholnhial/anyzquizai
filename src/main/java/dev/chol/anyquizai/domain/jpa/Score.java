@@ -1,5 +1,6 @@
 package dev.chol.anyquizai.domain.jpa;
 
+import dev.chol.anyquizai.dto.ScoreDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,4 +32,8 @@ public class Score {
 
     @Column
     private Float score;
+
+    public ScoreDTO toScoreDTO() {
+        return new ScoreDTO(nickName, totalCorrect, quiz.getTotalQuestions(),score, countryCode);
+    }
 }

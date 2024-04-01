@@ -10,7 +10,9 @@ spring:
     open-in-view: false
   ai:
     openai.api-key: ${OPENAI_API_KEY}
-
+springdoc:
+  api-docs:
+    path: /api-docs
 application:
   quiz-photos-path: "/var/quiz_photos"
   quiz-photo-height: 1024

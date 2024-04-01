@@ -19,6 +19,10 @@ public class SearchDTO {
 
     private String categoryId;
 
+    private Integer size;
+
+    private Integer page;
+
     private Sort.Direction sortByCreatedDate;
 
     private Sort.Direction sortByDifficulty;

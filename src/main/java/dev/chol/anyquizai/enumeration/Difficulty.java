@@ -1,8 +1,15 @@
 package dev.chol.anyquizai.enumeration;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@AllArgsConstructor
 public enum Difficulty {
-    ALL,
-    EASY,
-    MEDIUM,
-    HARD
+    EASY(1),
+    MEDIUM(2),
+    HARD(3);
+
+    private final int value;
 }

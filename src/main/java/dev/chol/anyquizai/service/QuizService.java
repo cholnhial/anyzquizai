@@ -51,6 +51,7 @@ public class QuizService {
         elasticQuizBuilder.title(quiz.getTitle());
         elasticQuizBuilder.categoryId(quizDto.categoryId());
         elasticQuizBuilder.difficulty(quiz.getDifficulty().toString());
+        elasticQuizBuilder._difficulty(quiz.getDifficulty().getValue());
         elasticQuizBuilder.uniqueCode(quiz.getUniqueCode());
         elasticQuizBuilder.questions(quiz.getTotalQuestions());
         elasticQuizBuilder.created(quiz.getCreated());

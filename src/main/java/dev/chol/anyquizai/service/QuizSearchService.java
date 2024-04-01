@@ -3,6 +3,9 @@ package dev.chol.anyquizai.service;
 import dev.chol.anyquizai.domain.elasticsearch.Quiz;
 import dev.chol.anyquizai.dto.SearchDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
@@ -22,7 +25,13 @@ public class QuizSearchService {
 
     private final ElasticsearchOperations elasticsearchOperations;
 
-    public List<Quiz> processSearch(SearchDTO searchDto) {
+    /**
+     * Uses search parameters provided to find the quizzes that match
+     *
+     * @param searchDto DTO containing search parameters
+     * @return
+     */
+    public Page<Quiz> processSearch(SearchDTO searchDto) {
         Criteria criteria = new Criteria("title");
         if (searchDto.getTitle() != null) {
             criteria.contains(searchDto.getTitle());
@@ -42,18 +51,34 @@ public class QuizSearchService {
         }
 
         if (searchDto.getSortByDifficulty() != null) {
-            searchQuery.addSort(Sort.by(searchDto.getSortByDifficulty(), "difficulty"));
+            searchQuery.addSort(Sort.by(searchDto.getSortByDifficulty(), "_difficulty"));
+        }
+
+        Pageable pageable;
+        if (searchDto.getPage() != null && searchDto.getSize() != null) {
+            pageable = Pageable.ofSize(searchDto.getSize()).withPage(searchDto.getPage());
+            searchQuery.setPageable(pageable);
+        } else {
+            pageable = Pageable.unpaged();
         }
 
         SearchHits<Quiz> quizzes = elasticsearchOperations
                 .search(searchQuery,
                         Quiz.class,
                         IndexCoordinates.of(QUIZ_INDEX_NAME));
-        return quizzes.get().map(SearchHit::getContent).collect(Collectors.toList());
+
+        return  new PageImpl<>(quizzes.get().map(SearchHit::getContent).collect(Collectors.toList()),pageable,
+                (int) quizzes.getTotalHits());
 
     }
 
 
+    /**
+     * Creates a quiz index to make search easy later
+     *
+     * @param quiz the elastic quiz document to save
+     * @return the id of the persisted doc
+     */
     public String createQuizIndex(Quiz quiz) {
 
         IndexQuery indexQuery = new IndexQueryBuilder()
