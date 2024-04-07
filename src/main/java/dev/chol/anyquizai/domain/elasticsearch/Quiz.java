@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Document(indexName = "quiz_index")
 @Getter
@@ -38,7 +38,7 @@ public class Quiz {
     @Field
     private Long categoryId;
 
-    @Field(type = FieldType.Date, format = DateFormat.date_optional_time)
-    private ZonedDateTime created;
+    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second_millis)
+    private LocalDateTime created;
 
 }

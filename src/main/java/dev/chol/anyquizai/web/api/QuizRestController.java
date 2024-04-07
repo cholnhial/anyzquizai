@@ -53,7 +53,7 @@ public class QuizRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created", content = {
                     @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = QuizDTO.class))}),
+                            schema = @Schema(implementation = QuizAIDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
             @ApiResponse(responseCode = "500", description = "Server Error")
     })
@@ -76,7 +76,7 @@ public class QuizRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the quiz",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = QuizDTO.class))}),
+                            schema = @Schema(implementation = QuizAIDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Quiz not found",
                     content = @Content)})
     @GetMapping("/{id}")

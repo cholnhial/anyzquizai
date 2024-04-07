@@ -1,16 +1,16 @@
 package dev.chol.anyquizai.domain.jpa;
 
-import dev.chol.anyquizai.enumeration.Difficulty;
 import dev.chol.anyquizai.dto.AnswerDTO;
 import dev.chol.anyquizai.dto.QuestionDTO;
 import dev.chol.anyquizai.dto.QuizDTO;
+import dev.chol.anyquizai.enumeration.Difficulty;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -44,7 +44,7 @@ public class Quiz {
     private Difficulty difficulty;
 
     @Column
-    private ZonedDateTime created;
+    private LocalDateTime created;
 
     @OneToMany(mappedBy = "quiz")
     private Set<Question> questions;
@@ -60,7 +60,7 @@ public class Quiz {
                 .map(question -> new QuestionDTO(question.getTitle(),
                         question.getCorrectAnswerLetter(),
                         question.getAnswers().stream()
-                        .map(answer -> new AnswerDTO(answer.getLetter(), answer.getTitle())).toList())).toList(),"");
+                        .map(answer -> new AnswerDTO(answer.getLetter(), answer.getTitle())).toList())).toList(),created);
     }
 
     public byte[] getPhotoInBytes() throws IOException {
