@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ScoreRepository extends JpaRepository<Score, Long> {
-    List<Score> findAllByQuizIdOrderByScoreAsc(Long id);
+    List<Score> findAllByQuizIdOrderByScoreDesc(Long id);
 }

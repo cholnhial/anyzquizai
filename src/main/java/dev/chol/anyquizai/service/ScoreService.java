@@ -41,7 +41,7 @@ public class ScoreService {
      * @return a list of quiz sc
      */
     public List<Score> getAllByQuizIdOrderedByScore(Long quizId) {
-        return scoreRepository.findAllByQuizIdOrderByScoreAsc(quizId);
+        return scoreRepository.findAllByQuizIdOrderByScoreDesc(quizId);
     }
 
 }
