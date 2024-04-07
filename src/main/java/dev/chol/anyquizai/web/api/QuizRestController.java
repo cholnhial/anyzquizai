@@ -159,8 +159,8 @@ public class QuizRestController {
             @ApiResponse(responseCode = "404", description = "Quiz not found", content = @Content)
     })
     @GetMapping("/{quizId}/score")
-    public ResponseEntity<List<Score>> getScoresByQuizId(@PathVariable Long quizId) {
-        return ResponseEntity.ok(scoreService.getAllByQuizIdOrderedByScore(quizId));
+    public ResponseEntity<List<ScoreDTO>> getScoresByQuizId(@PathVariable Long quizId) {
+        return ResponseEntity.ok(scoreService.getAllByQuizIdOrderedByScore(quizId).stream().map(Score::toScoreDTO).toList());
     }
 
     /**
