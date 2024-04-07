@@ -29,7 +29,7 @@ public class ScoreService {
     @Transactional
     public Score saveNewScore(QuizScoreSubmissionRequestDTO scoreDto) {
            Quiz quiz = quizService.getQuizById(scoreDto.quizId());
-           Score newQuizScore = scoreDto.toScore(quiz.getId());
+           Score newQuizScore = scoreDto.toScore(quiz.getTotalQuestions());
            newQuizScore.setQuiz(quiz);
            return scoreRepository.save(newQuizScore);
     }

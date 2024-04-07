@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 public record QuizScoreSubmissionRequestDTO (@NotEmpty  Long quizId, @NotEmpty String nickname,@NotEmpty Integer totalCorrect, @NotEmpty String countryCode) {
 
-    public Score toScore(Long quizTotalQuestions) {
+    public Score toScore(long quizTotalQuestions) {
         return Score.builder()
                 .nickName(nickname)
                 .totalCorrect(totalCorrect)
