@@ -107,13 +107,16 @@ public class QuizRestController {
         if (searchOptions.containsKey("categoryId")) {
             searchOptionsBuilder.categoryId(searchOptions.get("categoryId"));
         }
-        if (searchOptions.containsKey("difficulty")) {
-            searchOptionsBuilder.sortByDifficulty(Sort.Direction.fromString(searchOptions.get("difficulty")));
+        if (searchOptions.containsKey("sort_difficulty")) {
+            searchOptionsBuilder.sortByDifficulty(Sort.Direction.fromString(searchOptions.get("sort_difficulty")));
         }
 
+        if (searchOptions.containsKey("difficulty")) {
+            searchOptionsBuilder.difficulty(searchOptions.get("difficulty"));
+        }
 
-        if (searchOptions.containsKey("created")) {
-            searchOptionsBuilder.sortByCreatedDate(Sort.Direction.fromString(searchOptions.get("created")));
+        if (searchOptions.containsKey("sort_created")) {
+            searchOptionsBuilder.sortByCreatedDate(Sort.Direction.fromString(searchOptions.get("sort_created")));
         }
 
         if (searchOptions.containsKey("page") && searchOptions.containsKey("size")) {

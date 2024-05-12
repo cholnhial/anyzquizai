@@ -1,3 +1,4 @@
+<div class="h-16"></div>
 <div class="max-w-3xl mx-auto">
   <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
     <div class="mb-4">
@@ -20,9 +21,7 @@
           <select id="category" class="block appearance-none w-full bg-gray-200 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600 focus:border-gray-500 dark:focus:border-gray-500">
             <option value="">Select category</option>
             <option value="all">All</option>
-            <option value="category1">Category 1</option>
-            <option value="category2">Category 2</option>
-            <option value="category3">Category 3</option>
+            <option  *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
           </select>
         </div>
       </div>
@@ -48,10 +47,10 @@
         <div class="relative">
           <select id="difficulty" class="block appearance-none w-full bg-gray-200 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600 focus:border-gray-500 dark:focus:border-gray-500">
             <option value="">Select difficulty</option>
-            <option value="all">All</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
+            <option value="ALL">All</option>
+            <option value="EASY">Easy</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HARD">Hard</option>
           </select>
         </div>
       </div>
@@ -63,3 +62,52 @@
     </div>
   </div>
 </div>
+<div class="mt-4 grid mx-3 grid-cols-1 md:grid-cols-3 gap-4">
+  <ng-container *ngFor="let quiz of quizzes">
+    <div class="max-w-sm rounded-lg shadow-md bg-white dark:bg-gray-800">
+      <div class="relative">
+        <img class="w-full h-48 object-cover rounded-t-lg" [src]="'http://localhost:8080/api/quiz/' + quiz.id + '/photo'" [alt]="quiz.title + ' Image'">
+        <span class="absolute top-2 right-2 inline-block bg-yellow-300 text-yellow-800 dark:bg-yellow-500 dark:text-yellow-900 text-sm font-medium px-2.5 py-0.5 rounded">{{ quiz.difficulty }}</span>
+      </div>
+      <div class="p-4">
+        <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{{ quiz.title }}</h2>
+        <p class="text-gray-600 mb-4 dark:text-gray-400">History &middot; {{ quiz.questions }} Questions</p>
+        <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded dark:bg-blue-600 dark:hover:bg-blue-700">Play</button>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div class="flex justify-center">
+  <nav aria-label="Page navigation example">
+    <ul class="inline-flex items-center -space-x-px">
+      <li>
+        <a href="#" class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <span class="sr-only">Previous</span>
+          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+        </a>
+      </li>
+      <li>
+        <a href="#" aria-current="page" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+      </li>
+      <li>
+        <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+      </li>
+      <li>
+        <a href="#" aria-current="page" class="px-3 py-2 leading-tight text-blue-600 bg-blue-50 border border-gray-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+      </li>
+      <li>
+        <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+      </li>
+      <li>
+        <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+      </li>
+      <li>
+        <a href="#" class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <span class="sr-only">Next</span>
+          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
