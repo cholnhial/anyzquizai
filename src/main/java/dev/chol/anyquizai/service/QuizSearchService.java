@@ -14,7 +14,6 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,6 +41,10 @@ public class QuizSearchService {
         }
 
         if (searchDto.getNumberOfQuestions() != null) {
+            criteria.and(new Criteria("questions").is(searchDto.getNumberOfQuestions()));
+        }
+
+        if (searchDto.getDifficulty() != null) {
             criteria.and(new Criteria("difficulty").is(searchDto.getDifficulty()));
         }
         Query searchQuery = new CriteriaQuery(criteria);
