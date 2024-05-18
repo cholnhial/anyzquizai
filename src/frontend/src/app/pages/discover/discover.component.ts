@@ -5,6 +5,7 @@ import {HttpResponse} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {IQuiz} from "../../models/quiz.model";
 import {FormsModule} from "@angular/forms";
+import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-discover',
@@ -28,7 +29,9 @@ export class DiscoverComponent implements OnInit {
     sort_difficulty: 'ASC'}
 
 
-  constructor(private quizService: QuizService) {
+  constructor(private quizService: QuizService,
+              private router: Router,
+              private route: ActivatedRoute, ) {
   }
 
   computeSearchParams() {
@@ -42,7 +45,16 @@ export class DiscoverComponent implements OnInit {
       }, {});
   }
 
+  mergeSearchOptionsWithRouteQueryParams() {
+    this.route.queryParams.subscribe(params => {
+      this.searchOptions = {...this.searchOptions, ...params};
+    });
+  }
+
   ngOnInit(): void {
+
+    this.mergeSearchOptionsWithRouteQueryParams();
+
     this.quizService.getAllCategories().subscribe({
       next: (resp: HttpResponse<ICategory[]>) => {
         this.categories = resp.body || [];
@@ -55,13 +67,18 @@ export class DiscoverComponent implements OnInit {
 
   loadQuizzes() {
     this.quizService.search(this.computeSearchParams()).subscribe({
-      next: (resp: HttpResponse<any>) => {
+      next: async (resp: HttpResponse<any>) => {
         this.quizzes = resp.body.content || [];
+
+        // Update URL (so it contains search params)
+        const queryParams: NavigationExtras = { queryParams: this.searchOptions };
+        await this.router.navigate([], queryParams);
       }
     })
   }
 
   onSearch() {
+
     this.loadQuizzes();
   }
 
