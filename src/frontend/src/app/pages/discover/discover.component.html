@@ -10,7 +10,7 @@
           </svg>
         </div>
         <input type="text" id="search" [(ngModel)]="searchOptions.title" class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Search questions" required>
-        <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3 hover:scale-110 transition-transform" (click)="onClearTitle()">
+        <button *ngIf="searchOptions.title.length > 0" type="button" class="absolute inset-y-0 end-0 flex items-center pe-3 hover:scale-110 transition-transform" (click)="onClearTitle()">
           <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
           </svg>
