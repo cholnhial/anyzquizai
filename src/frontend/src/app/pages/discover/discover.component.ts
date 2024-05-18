@@ -23,15 +23,17 @@ export class DiscoverComponent implements OnInit {
   totalPages: number = 0;
   totalElements: number = 0;
   currentPage: number = 0;
-  searchOptions = {
+
+  searchOptions =  {
     page: 1,
     size: 6,
     title: '',
-    categoryId: undefined,
-    difficulty: undefined,
-    questions: undefined,
+    categoryId: '',
+    difficulty: '',
+    questions: '',
     sort_created: 'DESC',
-    sort_difficulty: 'ASC'}
+    sort_difficulty: 'ASC'
+  }
 
 
   constructor(private quizService: QuizService,
@@ -71,7 +73,8 @@ export class DiscoverComponent implements OnInit {
   }
 
   loadQuizzes() {
-    this.quizService.search(this.computeSearchParams()).subscribe({
+    const computedSearchParams = this.computeSearchParams();
+    this.quizService.search(computedSearchParams).subscribe({
       next: async (resp: HttpResponse<any>) => {
         this.quizzes = resp.body.content || [];
         this.isFirstPage = resp.body.first;
@@ -80,7 +83,7 @@ export class DiscoverComponent implements OnInit {
         this.totalElements = resp.body.totalElements ?? 0;
         this.currentPage = resp.body.number + 1;
         // Update URL (so it contains search params)
-        const queryParams: NavigationExtras = { queryParams: this.searchOptions };
+        const queryParams: NavigationExtras = { queryParams: computedSearchParams };
         await this.router.navigate([], queryParams);
       }
     })
