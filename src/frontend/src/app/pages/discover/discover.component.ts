@@ -82,4 +82,8 @@ export class DiscoverComponent implements OnInit {
     this.loadQuizzes();
   }
 
+  onClearSearch() {
+    this.searchOptions.title = '';
+  }
+
 }
