@@ -107,6 +107,11 @@ public class QuizRestController {
         if (searchOptions.containsKey("categoryId")) {
             searchOptionsBuilder.categoryId(searchOptions.get("categoryId"));
         }
+
+        if(searchOptions.containsKey("questions")) {
+            searchOptionsBuilder.numberOfQuestions(Integer.valueOf(searchOptions.get("questions")));
+        }
+
         if (searchOptions.containsKey("sort_difficulty")) {
             searchOptionsBuilder.sortByDifficulty(Sort.Direction.fromString(searchOptions.get("sort_difficulty")));
         }
