@@ -125,7 +125,7 @@ public class QuizRestController {
         }
 
         if (searchOptions.containsKey("page") && searchOptions.containsKey("size")) {
-            searchOptionsBuilder.page(Integer.valueOf(searchOptions.get("page")));
+            searchOptionsBuilder.page(Integer.parseInt(searchOptions.get("page")) - 1);
             searchOptionsBuilder.size(Integer.valueOf(searchOptions.get("size")));
         }
 

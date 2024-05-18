@@ -18,8 +18,13 @@ export class DiscoverComponent implements OnInit {
 
   categories: ICategory[] = [];
   quizzes: IQuiz[] = [];
+  isLastPage = false;
+  isFirstPage = false;
+  totalPages: number = 0;
+  totalElements: number = 0;
+  currentPage: number = 0;
   searchOptions = {
-    page: 0,
+    page: 1,
     size: 6,
     title: '',
     categoryId: undefined,
@@ -69,7 +74,11 @@ export class DiscoverComponent implements OnInit {
     this.quizService.search(this.computeSearchParams()).subscribe({
       next: async (resp: HttpResponse<any>) => {
         this.quizzes = resp.body.content || [];
-
+        this.isFirstPage = resp.body.first;
+        this.isLastPage = resp.body.last;
+        this.totalPages = resp.body.totalPages ?? 0;
+        this.totalElements = resp.body.totalElements ?? 0;
+        this.currentPage = resp.body.number + 1;
         // Update URL (so it contains search params)
         const queryParams: NavigationExtras = { queryParams: this.searchOptions };
         await this.router.navigate([], queryParams);
@@ -77,8 +86,82 @@ export class DiscoverComponent implements OnInit {
     })
   }
 
-  onSearch() {
+  goToPage(event: Event, pageNum: number) {
+    event.preventDefault(); // Prevent the default link behavior
+    // Handle navigation to the selected page
+    this.currentPage = pageNum;
+    this.searchOptions.page = pageNum;
+    this.onSearch();
+  }
 
+  goToPrevPage(event: Event) {
+    event.preventDefault(); // Prevent the default link behavior
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.searchOptions.page = this.currentPage;
+      this.onSearch();
+    }
+  }
+
+  goToNextPage(event: Event) {
+    event.preventDefault(); // Prevent the default link behavior
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.searchOptions.page = this.currentPage;
+      this.onSearch();
+    }
+  }
+
+  getPageNumbers(maxPagesToShow = 5): number[] {
+    const pageNumbers = [];
+    let startPage = 1;
+    let endPage = this.totalPages;
+
+    // Always include the first and last pages
+    pageNumbers.push(1);
+    if (this.totalPages > 1) {
+      pageNumbers.push(this.totalPages);
+    }
+
+    // Calculate the start and end pages based on the current page and maxPagesToShow
+    if (this.totalPages > maxPagesToShow) {
+      const maxPagesBeforeCurrent = Math.floor(maxPagesToShow / 2);
+      const maxPagesAfterCurrent = Math.ceil(maxPagesToShow / 2) - 1;
+
+      startPage = this.currentPage - maxPagesBeforeCurrent;
+      endPage = this.currentPage + maxPagesAfterCurrent;
+
+      if (startPage < 2) {
+        endPage += 2 - startPage;
+        startPage = 2;
+      }
+
+      if (endPage > this.totalPages - 1) {
+        startPage -= endPage - (this.totalPages - 1);
+        endPage = this.totalPages - 1;
+      }
+
+      if (startPage > 2) {
+        pageNumbers.push(-1); // Add ellipsis before the start page
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+      }
+
+      if (endPage < this.totalPages - 1) {
+        pageNumbers.push(-1); // Add ellipsis after the end page
+      }
+    } else {
+      for (let i = 2; i < this.totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    }
+
+    return pageNumbers.sort((a,b) => a - b);
+  }
+
+  onSearch() {
     this.loadQuizzes();
   }
 
