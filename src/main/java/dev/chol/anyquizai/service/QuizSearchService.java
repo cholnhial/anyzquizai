@@ -33,7 +33,7 @@ public class QuizSearchService {
     public Page<Quiz> processSearch(SearchDTO searchDto) {
         Criteria criteria = new Criteria("title");
         if (searchDto.getTitle() != null) {
-            criteria.contains(searchDto.getTitle());
+            criteria.matches("*%s*".formatted(searchDto.getTitle()));
         }
 
         if (searchDto.getCategoryId() != null) {
