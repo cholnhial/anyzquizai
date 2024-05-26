@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, RouterOutlet} from '@angular/router';
+import {ActivatedRoute, RouterModule, RouterOutlet} from '@angular/router';
 import {initFlowbite} from "flowbite";
-import {NgClass} from "@angular/common";
+import {CommonModule, NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgClass],
+  imports: [RouterOutlet, NgClass, CommonModule, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

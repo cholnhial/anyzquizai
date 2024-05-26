@@ -1,6 +1,5 @@
-<div class="h-16"></div>
-<div class="max-w-3xl mx-auto">
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+<div class="max-w-full">
+  <div class="bg-white max-w-3xl mx-auto dark:bg-gray-800 rounded-lg shadow-md p-6">
     <div class="mb-4">
       <label for="search" class="sr-only">Search</label>
       <div class="relative">
@@ -63,73 +62,74 @@
       </button>
     </div>
   </div>
-</div>
-<div class="my-3 min-h-[60px] flex items-center justify-end text-sm  font-medium text-gray-900 bg-white w-full border border-gray-200  dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-  <div class="me-3">
-  <button id="sortDropdownButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Sort By <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-  </svg>
-  </button>
-  <!-- Dropdown for sorting -->
-  <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="sortDropdownButton">
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Easiest</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hardest</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Most Questions</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Least Questions</a>
-      </li>
-    </ul>
-  </div>
-  </div>
-</div>
-<div class="mt-4 grid mx-3 grid-cols-1 md:grid-cols-3 gap-4">
-  <ng-container *ngFor="let quiz of quizzes">
-    <div class="max-w-sm rounded-lg shadow-md bg-white dark:bg-gray-800">
-      <div class="relative">
-        <img class="w-full h-48 object-cover rounded-t-lg" [src]="'http://localhost:8080/api/quiz/' + quiz.id + '/photo'" [alt]="quiz.title + ' Image'">
-        <span class="absolute top-2 right-2 inline-block bg-yellow-300 text-yellow-800 dark:bg-yellow-500 dark:text-yellow-900 text-sm font-medium px-2.5 py-0.5 rounded">{{ quiz.difficulty }}</span>
-      </div>
-      <div class="p-4">
-        <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{{ quiz.title }}</h2>
-        <p class="text-gray-600 mb-4 dark:text-gray-400">History &middot; {{ quiz.questions }} Questions</p>
-        <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded dark:bg-blue-600 dark:hover:bg-blue-700">Play</button>
+  <div class="my-3 min-h-[60px] flex items-center justify-end text-sm  font-medium text-gray-900 bg-white w-full border border-gray-200  dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+    <div class="me-3">
+      <button id="sortDropdownButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Sort By <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+      </svg>
+      </button>
+      <!-- Dropdown for sorting -->
+      <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="sortDropdownButton">
+          <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Easiest</a>
+          </li>
+          <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hardest</a>
+          </li>
+          <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Most Questions</a>
+          </li>
+          <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Least Questions</a>
+          </li>
+        </ul>
       </div>
     </div>
-  </ng-container>
-</div>
-<div class="flex justify-center mt-4">
-  <nav aria-label="Page navigation example">
-    <ul class="inline-flex items-center -space-x-px">
-      <li>
-        <a href="#" (click)="goToPrevPage($event)" class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-          <span class="sr-only">Previous</span>
-          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-        </a>
-      </li>
-      <ng-container *ngFor="let pageNum of getPageNumbers()">
-        <li *ngIf="pageNum !== -1; else ellipsis">
-          <a href="#" (click)="goToPage($event, pageNum)" [class.text-blue-600]="pageNum === currentPage" [class.bg-blue-50]="pageNum === currentPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ pageNum }}</a>
+  </div>
+  <div class="mt-4 grid mx-3 grid-cols-1 md:grid-cols-3 gap-4">
+    <ng-container *ngFor="let quiz of quizzes">
+      <div class="max-w-sm rounded-lg shadow-md bg-white dark:bg-gray-800">
+        <div class="relative">
+          <img class="w-full h-48 object-cover rounded-t-lg" [src]="'http://localhost:8080/api/quiz/' + quiz.id + '/photo'" [alt]="quiz.title + ' Image'">
+          <span class="absolute top-2 right-2 inline-block bg-yellow-300 text-yellow-800 dark:bg-yellow-500 dark:text-yellow-900 text-sm font-medium px-2.5 py-0.5 rounded">{{ quiz.difficulty }}</span>
+        </div>
+        <div class="p-4">
+          <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{{ quiz.title }}</h2>
+          <p class="text-gray-600 mb-4 dark:text-gray-400">History &middot; {{ quiz.questions }} Questions</p>
+          <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded dark:bg-blue-600 dark:hover:bg-blue-700">Play</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="flex justify-center mt-4">
+    <nav aria-label="Page navigation example">
+      <ul class="inline-flex items-center">
+        <li>
+          <a href="#" (click)="goToPrevPage($event)" class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <span class="sr-only">Previous</span>
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+          </a>
         </li>
-        <ng-template #ellipsis>
-          <li>
-            <span class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">...</span>
+        <ng-container *ngFor="let pageNum of getPageNumbers()">
+          <li *ngIf="pageNum !== -1; else ellipsis">
+            <a href="#" (click)="goToPage($event, pageNum)" [class.text-blue-600]="pageNum === currentPage" [class.bg-blue-50]="pageNum === currentPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ pageNum }}</a>
           </li>
-        </ng-template>
-      </ng-container>
-      <li>
-        <a href="#" (click)="goToNextPage($event)" class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-          <span class="sr-only">Next</span>
-          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-        </a>
-      </li>
-    </ul>
-  </nav>
+          <ng-template #ellipsis>
+            <li>
+              <span class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">...</span>
+            </li>
+          </ng-template>
+        </ng-container>
+        <li>
+          <a href="#" (click)="goToNextPage($event)" class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <span class="sr-only">Next</span>
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </div>
+
 
