@@ -12,9 +12,5 @@ export const routes: Routes = [
   {
     path: 'play/:quizId',
     loadComponent: () => import('./pages/play/play.component').then( m => m.PlayComponent)
-  },
-  {
-    path: 'finish',
-    loadComponent: () => import('./pages/finish/finish.component').then( m => m.FinishComponent)
-  },
+  }
 ];
