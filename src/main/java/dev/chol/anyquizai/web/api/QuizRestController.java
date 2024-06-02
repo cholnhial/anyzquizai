@@ -81,7 +81,7 @@ public class QuizRestController {
                     content = @Content)})
     @GetMapping("/{id}")
     public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
-        return ResponseEntity.ok(this.quizService.getQuizById(id).toDTO());
+        return ResponseEntity.ok(this.quizService.getQuizByIdAsDTO(id));
     }
 
     /**

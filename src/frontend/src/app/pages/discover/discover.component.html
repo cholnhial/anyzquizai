@@ -125,6 +125,7 @@
           <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{{ quiz.title }}</h2>
           <p class="text-gray-600 mb-4 dark:text-gray-400">History &middot; {{ quiz.questions }} Questions</p>
           <button
+            [routerLink]="['/play', quiz.id]"
             class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded dark:bg-blue-600 dark:hover:bg-blue-700">
             Play
           </button>

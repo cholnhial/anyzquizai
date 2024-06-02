@@ -28,41 +28,38 @@
     </div>
   </div>
 </div>
-<div id="content" class="max-w-4xl mx-auto min-h-[70vh] bg-gray-300 dark:bg-gray-900">
+<div  class="max-w-4xl mx-auto min-h-[70vh] bg-gray-300 dark:bg-gray-900">
   <div class="mx-auto p-6 text-center">
-    <h1 class="text-3xl font-bold mb-6 text-gray-700 dark:text-gray-300">Car Quiz</h1>
-    <h1 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">What is something that usually blah blah</h1>
+    <h1 class="text-3xl font-bold mb-6 text-gray-700 dark:text-gray-300">{{ quiz?.title}}</h1>
+    <h1 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">{{ getCurrentQuestion() }}</h1>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 answers-mt">
-      <!-- Question 1 -->
-      <button class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50  focus:outline-none">
-        <span class="text-xl font-bold mr-2">A.</span>
-        <span>Cow</span>
-      </button>
-      <!-- Question 2 -->
-      <button class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50 focus:outline-none">
-        <span class="text-xl font-bold mr-2">B.</span>
-        <span>Horse</span>
-      </button>
-      <!-- Question 3 -->
-      <button class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50 focus:outline-none">
-        <span class="text-xl font-bold mr-2">C.</span>
-        <span>Pig</span>
-      </button>
-      <!-- Question 4 -->
-      <button class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50 focus:outline-none">
-        <span class="text-xl font-bold mr-2">D.</span>
-        <span>Sheep</span>
+      <button (click)="onAnswer(answer.answerLetter)" *ngFor="let answer of getQuizAnswersForCurrentQuestionSorted()" class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50  focus:outline-none">
+        <span class="text-xl font-bold mr-2">{{answer.answerLetter}}.</span>
+        <span>{{ answer.answerTitle}}</span>
+
+        <svg *ngIf="isAnswerWrong && answer.answerLetter === getCurrentQuestionCorrectAnswerLetter()" class="w-[30px] h-[30px] text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+        </svg>
+
       </button>
     </div>
-    <div class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
+    <div *ngIf="isAnswerWrong" class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
       <svg class="w-[48px] h-[48px] text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
       </svg>
       <h1 class="text-3xl font-bold dark:text-white">Wrong!</h1>
-      <p class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">You can do better</p>
+      <p class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">{{ getRandomMessage(wrongMessages)}}</p>
+    </div>
+    <div *ngIf="isAnswerCorrect" class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
+      <svg class="w-[48px] h-[48px] text-green-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+      </svg>
+
+      <h1 class="text-3xl font-bold dark:text-white">Well Done!</h1>
+      <p class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">{{ getRandomMessage(successMessages)}}</p>
     </div>
     <div class="flex-1">
-      <button type="button" class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center w-full dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      <button type="button" *ngIf="nextQuestionIsReady" (click)="onNext()" class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center w-full dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Next
         <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>

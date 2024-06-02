@@ -1,0 +1,1 @@
+ALTER TABLE answer DROP INDEX letter;

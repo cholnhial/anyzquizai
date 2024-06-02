@@ -14,7 +14,7 @@
     </svg>
     <h4 class="text-2xl font-bold dark:text-white">Success!</h4>
     <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Your quiz is ready.</p>
-    <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none w-1/2 focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Play</button>
+    <button [routerLink]="['/play', quizId]" type="button" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none w-1/2 focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Play</button>
   </div>
 
   <div *ngIf="error" class="flex flex-col items-center">

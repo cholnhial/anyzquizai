@@ -5,12 +5,12 @@ import {HttpResponse} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {IQuiz} from "../../models/quiz.model";
 import {FormsModule} from "@angular/forms";
-import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
+import {ActivatedRoute, NavigationExtras, Router, RouterModule} from "@angular/router";
 
 @Component({
   selector: 'app-discover',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './discover.component.html',
   styleUrl: './discover.component.scss'
 })

@@ -21,6 +21,10 @@ export class QuizService {
     return this.http.get<ICategory[]>(`${API_BASEURL}/quiz/categories`, {observe: 'response'});
   }
 
+  getQuizById(id: number): Observable<HttpResponse<IQuizFull>> {
+    return this.http.get<IQuizFull>(`${API_BASEURL}/quiz/${id}`, {observe: 'response'});
+  }
+
   create(quiz: INewQuiz): Observable<HttpResponse<IQuizFull>> {
     return this.http.post<IQuizFull>(`${API_BASEURL}/quiz`,quiz, {observe: 'response'});
   }

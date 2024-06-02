@@ -4,6 +4,7 @@ import dev.chol.anyquizai.config.ApplicationProperties;
 import dev.chol.anyquizai.domain.jpa.Category;
 import dev.chol.anyquizai.domain.jpa.Quiz;
 import dev.chol.anyquizai.dto.QuizAIDTO;
+import dev.chol.anyquizai.dto.QuizDTO;
 import dev.chol.anyquizai.exception.QuizNotFoundException;
 import dev.chol.anyquizai.exception.SavePhotoException;
 import dev.chol.anyquizai.repository.jpa.QuizRepository;
@@ -67,6 +68,17 @@ public class QuizService {
      */
     public Quiz getQuizById(Long id) {
         return quizRepository.findById(id).orElseThrow(() -> new QuizNotFoundException(id));
+    }
+
+    /**
+     * Convenience method that allows us fetch a quiz and use our hibernate session to convert to DTO allowing
+     * lazy initialisation to work
+     *
+     * @param id quiz Id
+     * @return a QuizDTO
+     */
+    public QuizDTO getQuizByIdAsDTO(Long id) {
+        return this.getQuizById(id).toDTO();
     }
 
 

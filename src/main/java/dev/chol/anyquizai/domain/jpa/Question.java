@@ -28,6 +28,6 @@ public class Question {
     @Column
     private String correctAnswerLetter;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private Set<Answer> answers;
 }

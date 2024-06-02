@@ -4,11 +4,12 @@ import {ICategory} from "../../models/category.model";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {INewQuiz} from "../../models/new-quiz.model";
+import {RouterModule} from "@angular/router";
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -20,6 +21,7 @@ export class CreateComponent implements OnInit {
 
   error = false;
   success = false;
+  quizId?: number;
   creating = false;
   nquestions = [5,10,20,30];
   difficulties = ['EASY', 'MEDIUM', 'HARD'];
@@ -43,6 +45,7 @@ export class CreateComponent implements OnInit {
     this.creating = true;
     this.quizService.create(this.quiz).subscribe({
       next: resp => {
+        this.quizId = resp.body?.id;
         this.success = true;
         this.error = false;
       },

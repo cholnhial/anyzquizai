@@ -46,10 +46,10 @@ public class Quiz {
     @Column
     private LocalDateTime created;
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private Set<Question> questions;
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private Set<Score> scores;
 
     @OneToOne
