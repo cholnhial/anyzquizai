@@ -28,8 +28,8 @@
     </div>
   </div>
 </div>
-<div  class="max-w-4xl mx-auto min-h-[70vh] bg-gray-300 dark:bg-gray-900">
-  <div class="mx-auto p-6 text-center">
+<div  class="max-w-4xl mb-8 mx-auto min-h-[70vh] bg-gray-300 dark:bg-gray-900">
+  <div *ngIf="!complete" class="mx-auto p-6 text-center">
     <h1 class="text-3xl font-bold mb-6 text-gray-700 dark:text-gray-300">{{ quiz?.title}}</h1>
     <h1 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">{{ getCurrentQuestion() }}</h1>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 answers-mt">
@@ -48,7 +48,7 @@
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
       </svg>
       <h1 class="text-3xl font-bold dark:text-white">Wrong!</h1>
-      <p class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">{{ getRandomMessage(wrongMessages)}}</p>
+      <p class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">{{ 'The correct answer is ' + getCurrentQuestionCorrectAnswerLetter()}}</p>
     </div>
     <div *ngIf="isAnswerCorrect" class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
       <svg class="w-[48px] h-[48px] text-green-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -65,6 +65,52 @@
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
         </svg>
       </button>
+    </div>
+  </div>
+  <div [ngClass]="{'hidden': !complete}"  class="mx-auto p-6 text-center">
+    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">{{ totalCorrect + '/' + totalQuestions}}</span></h1>
+    <h3 class="text-3xl font-bold dark:text-white">Well Done! 👏</h3>
+    <div class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800 shadow-md">
+      <h1 class="text-2xl font-bold mb-4 dark:text-white">Join Leaderboard</h1>
+      <div class="w-full mb-4">
+        <label for="country" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Select Country
+        </label>
+        <div class="relative" id="country">
+          <button
+            id="dropdownButton"
+            data-dropdown-toggle="dropdown"
+            class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-left text-gray-700 bg-gray-50 border border-gray-300 rounded-lg dark:text-white dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="button"
+          >
+            <span class="fi fi-{{ selectedCountry }}"></span> {{ getSelectedCountry() }}
+            <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div
+            id="dropdown"
+            class="hidden z-10 w-full mt-1 bg-white rounded-lg shadow-md dark:bg-gray-700  max-h-60 overflow-y-auto"
+            data-popper-reference-hidden
+            data-popper-escaped
+            data-popper-placement="bottom"
+          >
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownButton">
+              <li *ngFor="let country of countries" (click)="selectedCountry = country.code;  document.getElementById('dropdownButton')?.click()" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600">
+                <span class="fi fi-{{ country.code }} mr-2"></span> {{ country.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="w-full mb-4">
+        <label for="nickname" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Nickname</label>
+        <input type="text" id="nickname" class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your nickname">
+      </div>
+
+      <button type="button" class="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">Join</button>
     </div>
   </div>
 </div>

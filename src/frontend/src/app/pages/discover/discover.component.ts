@@ -6,6 +6,7 @@ import {CommonModule} from "@angular/common";
 import {IQuiz} from "../../models/quiz.model";
 import {FormsModule} from "@angular/forms";
 import {ActivatedRoute, NavigationExtras, Router, RouterModule} from "@angular/router";
+import {initFlowbite} from "flowbite";
 
 @Component({
   selector: 'app-discover',
@@ -67,7 +68,7 @@ export class DiscoverComponent implements OnInit {
         this.categories = resp.body || [];
       }
     });
-
+    initFlowbite();
     this.loadQuizzes();
 
   }
