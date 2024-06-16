@@ -119,11 +119,14 @@
           <img class="w-full h-48 object-cover rounded-t-lg"
                [src]="'http://localhost:8080/api/quiz/' + quiz.id + '/photo'" [alt]="quiz.title + ' Image'">
           <span
-            class="absolute top-2 right-2 inline-block bg-yellow-300 text-yellow-800 dark:bg-yellow-500 dark:text-yellow-900 text-sm font-medium px-2.5 py-0.5 rounded">{{ quiz.difficulty }}</span>
+            [ngClass]="{'bg-green-300 text-green-800 dark:bg-green-500 dark:text-green-900': quiz.difficulty == 'EASY',
+             'bg-yellow-300 text-yellow-800 dark:bg-yellow-500 dark:text-yellow-900': quiz.difficulty == 'MEDIUM',
+              'bg-red-300 text-red-800 dark:bg-red-500 dark:text-red-900': quiz.difficulty == 'HARD'}"
+            class="absolute top-2 right-2 inline-block text-sm font-medium px-2.5 py-0.5 rounded">{{ quiz.difficulty }}</span>
         </div>
         <div class="p-4">
           <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{{ quiz.title }}</h2>
-          <p class="text-gray-600 mb-4 dark:text-gray-400">History &middot; {{ quiz.questions }} Questions</p>
+          <p class="text-gray-600 mb-4 dark:text-gray-400">{{ getCategoryNameById(quiz.categoryId)}} &middot; {{ quiz.questions }} Questions</p>
           <button
             [routerLink]="['/play', quiz.id]"
             class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded dark:bg-blue-600 dark:hover:bg-blue-700">

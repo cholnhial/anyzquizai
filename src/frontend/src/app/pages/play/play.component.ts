@@ -5,11 +5,14 @@ import {IQuizFull} from "../../models/quiz-full.model";
 import {QuizService} from "../../services/quiz.service";
 import {initFlowbite} from "flowbite";
 import confetti from 'canvas-confetti';
+import {FormsModule} from "@angular/forms";
+import {IScoreSubmission} from "../../models/score-submission.model";
+import {IScore} from "../../models/score.model";
 
 @Component({
   selector: 'app-play',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './play.component.html',
   styleUrl: './play.component.scss'
 })
@@ -17,6 +20,7 @@ export class PlayComponent implements OnInit {
 
   activeTab: string = 'play';
   quiz?: IQuizFull;
+  quizScores: IScore[] = [];
   currentQuestionIndex = 0;
   nextQuestionIsReady = false;
   isAnswerWrong = false;
@@ -25,6 +29,7 @@ export class PlayComponent implements OnInit {
   totalQuestions = 0;
   totalCorrect = 0;
   complete = false;
+  nickname = '';
 
 
   countries = [
@@ -272,6 +277,7 @@ export class PlayComponent implements OnInit {
       next: resp => {
         this.quiz = resp.body!!;
         this.totalQuestions = this.quiz?.questions.length || 0 ;
+        this.loadQuizScores();
       },
       error: err => {
         //TODO: handle error show 404 or something
@@ -330,6 +336,33 @@ export class PlayComponent implements OnInit {
 
   getSelectedCountry() {
    return  this.countries.find((c:any) => c.code === this.selectedCountry)?.name;
+  }
+
+  loadQuizScores() {
+    this.quizService.getQuizScoresById(this.quiz!.id).subscribe({
+      next: resp => {
+        this.quizScores = resp.body || [];
+      },
+      error: err => {
+        // TODO handle error
+      }
+    })
+  }
+  onSubmitScore() {
+    const score: IScoreSubmission = {quizId: this.quiz?.id, nickname: this.nickname, countryCode: this.selectedCountry,totalCorrect: this.totalCorrect };
+    this.quizService.submitScore(score).subscribe({
+      next: resp => {
+        this.setActiveTab('leaderboard');
+        this.loadQuizScores();
+        this.complete = false;
+        this.currentQuestionIndex = 0;
+        this.totalCorrect = 0;
+        this.resetForNextQuestion();
+      },
+      error: err => {
+        // TODO: handle error
+      }
+    })
   }
 
   protected readonly document = document;

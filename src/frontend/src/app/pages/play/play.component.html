@@ -29,7 +29,7 @@
   </div>
 </div>
 <div  class="max-w-4xl mb-8 mx-auto min-h-[70vh] bg-gray-300 dark:bg-gray-900">
-  <div *ngIf="!complete" class="mx-auto p-6 text-center">
+  <div *ngIf="!complete && activeTab == 'play'" class="mx-auto p-6 text-center">
     <h1 class="text-3xl font-bold mb-6 text-gray-700 dark:text-gray-300">{{ quiz?.title}}</h1>
     <h1 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">{{ getCurrentQuestion() }}</h1>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 answers-mt">
@@ -67,7 +67,29 @@
       </button>
     </div>
   </div>
-  <div [ngClass]="{'hidden': !complete}"  class="mx-auto p-6 text-center">
+  <div *ngIf="activeTab === 'leaderboard'" class="mx-auto p-6">
+    <div class="overflow-auto  h-[63vh]">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs sticky top-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="py-3 px-6">Country</th>
+          <th scope="col" class="py-3 px-6">Nickname</th>
+          <th scope="col" class="py-3 px-6">Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let score of quizScores" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <td class="py-4 px-6">
+            <span [ngClass]="'fi fi-' + score.countryCode?.toLowerCase()"></span>
+          </td>
+          <td class="py-4 px-6">{{ score.nickname }}</td>
+          <td class="py-4 px-6">{{ score.totalCorrect }}/{{ score.totalQuestions }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div [ngClass]="{'hidden': !complete || activeTab === 'leaderboard'}"  class="mx-auto p-6 text-center">
     <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">{{ totalCorrect + '/' + totalQuestions}}</span></h1>
     <h3 class="text-3xl font-bold dark:text-white">Well Done! 👏</h3>
     <div class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800 shadow-md">
@@ -107,10 +129,10 @@
 
       <div class="w-full mb-4">
         <label for="nickname" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Nickname</label>
-        <input type="text" id="nickname" class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your nickname">
+        <input  type="text" #nickNameInput="ngModel" required [(ngModel)]="nickname" id="nickname" class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your nickname">
       </div>
 
-      <button type="button" class="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">Join</button>
+      <button (click)="onSubmitScore()" [disabled]="nickNameInput.invalid" type="button" class="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">Join</button>
     </div>
   </div>
 </div>

@@ -5,6 +5,8 @@ import {Observable} from "rxjs";
 import {ICategory} from "../models/category.model";
 import {INewQuiz} from "../models/new-quiz.model";
 import {IQuizFull} from "../models/quiz-full.model";
+import {IScore} from "../models/score.model";
+import {IScoreSubmission} from "../models/score-submission.model";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,13 @@ export class QuizService {
 
   create(quiz: INewQuiz): Observable<HttpResponse<IQuizFull>> {
     return this.http.post<IQuizFull>(`${API_BASEURL}/quiz`,quiz, {observe: 'response'});
+  }
+
+  getQuizScoresById(id: number): Observable<HttpResponse<IScore[]>> {
+    return this.http.get<IScore[]>(`${API_BASEURL}/quiz/${id}/score`, {observe: 'response'});
+  }
+  submitScore(score: IScoreSubmission): Observable<HttpResponse<IScore>> {
+    return this.http.post<IScore>(`${API_BASEURL}/quiz/score`,score, {observe: 'response'});
   }
 
 }

@@ -49,7 +49,7 @@ public class QuizService {
         var elasticQuizBuilder = dev.chol.anyquizai.domain.elasticsearch.Quiz.builder();
         elasticQuizBuilder.id(quiz.getId());
         elasticQuizBuilder.title(quiz.getTitle());
-        elasticQuizBuilder.categoryId(quizAIDTO.categoryId());
+        elasticQuizBuilder.categoryId(categoryId);
         elasticQuizBuilder.difficulty(quiz.getDifficulty().toString());
         elasticQuizBuilder._difficulty(quiz.getDifficulty().getValue());
         elasticQuizBuilder.uniqueCode(quiz.getUniqueCode());

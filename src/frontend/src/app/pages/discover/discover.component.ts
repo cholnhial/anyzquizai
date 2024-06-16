@@ -173,4 +173,8 @@ export class DiscoverComponent implements OnInit {
     this.searchOptions.title = '';
   }
 
+  getCategoryNameById(id: number) {
+    return this.categories.find(c => c.id === id)?.name;
+  }
+
 }
