@@ -7,6 +7,7 @@ import {IQuiz} from "../../models/quiz.model";
 import {FormsModule} from "@angular/forms";
 import {ActivatedRoute, NavigationExtras, Router, RouterModule} from "@angular/router";
 import {initFlowbite} from "flowbite";
+import {API_BASEURL} from "../../app.constants";
 
 @Component({
   selector: 'app-discover',
@@ -177,4 +178,5 @@ export class DiscoverComponent implements OnInit {
     return this.categories.find(c => c.id === id)?.name;
   }
 
+  protected readonly API_BASEURL = API_BASEURL;
 }
