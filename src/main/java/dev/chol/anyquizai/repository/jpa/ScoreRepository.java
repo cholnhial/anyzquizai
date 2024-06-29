@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface ScoreRepository extends JpaRepository<Score, Long> {
     List<Score> findAllByQuizIdOrderByScoreDesc(Long id);
-    Optional<Score> findOneByNickName(String nickName);
+    Optional<Score> findOneByNickNameAndQuizId(String nickName, Long quizId);
 }

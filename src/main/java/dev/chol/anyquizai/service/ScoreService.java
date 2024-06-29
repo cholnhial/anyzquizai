@@ -30,12 +30,12 @@ public class ScoreService {
      */
     @Transactional
     public Score saveNewScore(QuizScoreSubmissionRequestDTO scoreDto) {
+            if (getOneByNickname(scoreDto.nickname(), scoreDto.quizId()).isPresent()) {
+                throw new NickNameTakenException(scoreDto.nickname());
+            }
            Quiz quiz = quizService.getQuizById(scoreDto.quizId());
            Score newQuizScore = scoreDto.toScore(quiz.getTotalQuestions());
            newQuizScore.setQuiz(quiz);
-           if (getOneByNickname(scoreDto.nickname()).isPresent()) {
-               throw new NickNameTakenException(scoreDto.nickname());
-           }
            return scoreRepository.save(newQuizScore);
     }
 
@@ -49,8 +49,8 @@ public class ScoreService {
         return scoreRepository.findAllByQuizIdOrderByScoreDesc(quizId);
     }
 
-   public Optional<Score> getOneByNickname(String nickname) {
-        return scoreRepository.findOneByNickName(nickname);
+   public Optional<Score> getOneByNickname(String nickname, Long quizId) {
+        return scoreRepository.findOneByNickNameAndQuizId(nickname, quizId);
     }
 
 }

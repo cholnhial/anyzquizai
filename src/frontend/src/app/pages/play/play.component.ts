@@ -20,6 +20,7 @@ export class PlayComponent implements OnInit {
 
   activeTab: string = 'play';
   quiz?: IQuizFull;
+  successMessage: string = '';
   quizScores: IScore[] = [];
   currentQuestionIndex = 0;
   nextQuestionIsReady = false;
@@ -304,6 +305,7 @@ export class PlayComponent implements OnInit {
     if (this.quiz?.questions[this.currentQuestionIndex].correctAnswerLetter == answerLetter) {
       this.isAnswerCorrect = true;
       this.totalCorrect++;
+      this.successMessage = this.getRandomMessage(this.successMessages);
     } else {
       this.isAnswerWrong = true;
     }
