@@ -1,0 +1,1 @@
+ALTER TABLE score DROP INDEX nick_name;
