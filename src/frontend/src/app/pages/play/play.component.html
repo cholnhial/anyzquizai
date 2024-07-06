@@ -30,19 +30,41 @@
 </div>
 <div  class="max-w-4xl mb-8 mx-auto min-h-[70vh] bg-gray-300 dark:bg-gray-900">
   <div *ngIf="!complete && activeTab == 'play'" class="mx-auto p-6 text-center">
-    <h1 class="text-3xl font-bold mb-6 text-gray-700 dark:text-gray-300">{{ quiz?.title}}</h1>
-    <h1 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">{{ getCurrentQuestion() }}</h1>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 answers-mt">
-      <button (click)="onAnswer(answer.answerLetter)" *ngFor="let answer of getQuizAnswersForCurrentQuestionSorted()" class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50  focus:outline-none">
-        <span class="text-xl font-bold mr-2">{{answer.answerLetter}}.</span>
-        <span>{{ answer.answerTitle}}</span>
+    <ng-container *ngIf="!isLoading; else loadingContent">
+      <h1 class="text-3xl font-bold mb-6 text-gray-700 dark:text-gray-300">{{ quiz?.title}}</h1>
+      <h1 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">{{ getCurrentQuestion() }}</h1>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 answers-mt">
+        <button (click)="onAnswer(answer.answerLetter)" *ngFor="let answer of getQuizAnswersForCurrentQuestionSorted()" class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50  focus:outline-none">
+          <span class="text-xl font-bold mr-2">{{answer.answerLetter}}.</span>
+          <span>{{ answer.answerTitle}}</span>
 
-        <svg *ngIf="isAnswerWrong && answer.answerLetter === getCurrentQuestionCorrectAnswerLetter()" class="w-[30px] h-[30px] text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-        </svg>
+          <svg *ngIf="isAnswerWrong && answer.answerLetter === getCurrentQuestionCorrectAnswerLetter()" class="w-[30px] h-[30px] text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
 
-      </button>
-    </div>
+        </button>
+      </div>
+    </ng-container>
+    <ng-template #loadingContent>
+      <div class="mx-auto p-6 text-center animate-pulse">
+        <div class="h-9 bg-gray-200 rounded-lg dark:bg-gray-700 w-3/4 mx-auto mb-6"></div>
+        <div class="h-7 bg-gray-200 rounded-lg dark:bg-gray-700 w-2/3 mx-auto mb-8"></div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 answers-mt">
+          <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center h-16">
+            <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-4/5"></div>
+          </div>
+          <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center h-16">
+            <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-4/5"></div>
+          </div>
+          <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center h-16">
+            <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-4/5"></div>
+          </div>
+          <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center h-16">
+            <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-4/5"></div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
     <div *ngIf="isAnswerWrong" class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
       <svg class="w-[48px] h-[48px] text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
@@ -129,7 +151,7 @@
 
       <div class="w-full mb-4">
         <label for="nickname" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Nickname</label>
-        <input  type="text" #nickNameInput="ngModel" required [(ngModel)]="nickname" id="nickname" class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your nickname">
+        <input  type="text" #nickNameInput="ngModel" required [(ngModel)]="nickname" name="nickname" id="nickname" class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your nickname">
       </div>
 
       <button (click)="onSubmitScore()" [disabled]="nickNameInput.invalid" type="button" class="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">Join</button>

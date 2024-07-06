@@ -55,7 +55,7 @@
   </div>
   <div class="mb-4">
     <label for="category" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
-    <select id="category" [(ngModel)]="quiz.categoryId" class="w-full p-2.5 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+    <select id="category"  name="category" [(ngModel)]="quiz.categoryId" class="w-full p-2.5 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
       <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
     </select>
   </div>

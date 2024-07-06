@@ -22,6 +22,7 @@ export class DiscoverComponent implements OnInit {
   quizzes: IQuiz[] = [];
   isLastPage = false;
   isFirstPage = false;
+  isLoading = true;
   totalPages: number = 0;
   totalElements: number = 0;
   currentPage: number = 0;
@@ -76,6 +77,7 @@ export class DiscoverComponent implements OnInit {
 
   loadQuizzes() {
     const computedSearchParams = this.computeSearchParams();
+    this.isLoading = true;
     this.quizService.search(computedSearchParams).subscribe({
       next: async (resp: HttpResponse<any>) => {
         this.quizzes = resp.body.content || [];
@@ -84,6 +86,7 @@ export class DiscoverComponent implements OnInit {
         this.totalPages = resp.body.totalPages ?? 0;
         this.totalElements = resp.body.totalElements ?? 0;
         this.currentPage = resp.body.number + 1;
+        this.isLoading = false;
         // Update URL (so it contains search params)
         const queryParams: NavigationExtras = { queryParams: computedSearchParams };
         await this.router.navigate([], queryParams);

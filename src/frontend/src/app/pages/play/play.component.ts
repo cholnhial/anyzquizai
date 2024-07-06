@@ -26,6 +26,7 @@ export class PlayComponent implements OnInit {
   nextQuestionIsReady = false;
   isAnswerWrong = false;
   isAnswerCorrect = false;
+  isLoading = true;
   showCountryDropdown = false;
   totalQuestions = 0;
   totalCorrect = 0;
@@ -344,6 +345,7 @@ export class PlayComponent implements OnInit {
     this.quizService.getQuizScoresById(this.quiz!.id).subscribe({
       next: resp => {
         this.quizScores = resp.body || [];
+        this.isLoading = false;
       },
       error: err => {
         // TODO handle error
