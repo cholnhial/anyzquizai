@@ -93,20 +93,29 @@
       <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="sortDropdownButton">
           <li>
-            <a href="#"
+            <a
+               href="javascript:void(0);"
+               (click)="onSortDifficulty('ASC',$event)"
                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Easiest</a>
           </li>
           <li>
-            <a href="#"
+            <a
+              href="javascript:void(0);"
+               (click)="onSortDifficulty('DESC',$event)"
                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hardest</a>
           </li>
           <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Most
-              Questions</a>
+            <a
+              href="javascript:void(0);"
+               (click)="onSortCreated('DESC',$event)"
+               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Most
+              Recent</a>
           </li>
           <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Least
-              Questions</a>
+            <a
+               href="javascript:void(0);"
+              (click)="onSortCreated('ASC', $event)"
+               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Oldest</a>
           </li>
         </ul>
       </div>

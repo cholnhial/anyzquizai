@@ -177,6 +177,18 @@ export class DiscoverComponent implements OnInit {
     this.searchOptions.title = '';
   }
 
+  onSortDifficulty(direction:string, event:Event) {
+    event.preventDefault();
+    this.searchOptions.sort_difficulty = direction;
+    this.loadQuizzes();
+  }
+
+  onSortCreated(direction: string, event: Event) {
+    event.preventDefault();
+    this.searchOptions.sort_created = direction;
+    this.loadQuizzes();
+  }
+
   getCategoryNameById(id: number) {
     return this.categories.find(c => c.id === id)?.name;
   }
