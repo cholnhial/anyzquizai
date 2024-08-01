@@ -9,6 +9,18 @@ import {ActivatedRoute, NavigationExtras, Router, RouterModule} from "@angular/r
 import {initFlowbite} from "flowbite";
 import {API_BASEURL} from "../../app.constants";
 
+
+interface SearchOptions {
+  page: number;
+  size: number;
+  title: string;
+  categoryId: string;
+  difficulty: string;
+  questions: string;
+  sort_created?: string;
+  sort_difficulty?: string;
+}
+
 @Component({
   selector: 'app-discover',
   standalone: true,
@@ -26,16 +38,8 @@ export class DiscoverComponent implements OnInit {
   totalPages: number = 0;
   totalElements: number = 0;
   currentPage: number = 0;
-
-  searchOptions =  {
-    page: 1,
-    size: 6,
-    title: '',
-    categoryId: '',
-    difficulty: '',
-    questions: '',
-    sort_created: 'DESC',
-    sort_difficulty: 'ASC'
+  searchOptions: SearchOptions = {
+    categoryId: "", difficulty: "", page: 1, questions: "", size: 6, title: "", sort_difficulty: 'ASC', sort_created: 'DESC'
   }
 
 
@@ -180,12 +184,14 @@ export class DiscoverComponent implements OnInit {
   onSortDifficulty(direction:string, event:Event) {
     event.preventDefault();
     this.searchOptions.sort_difficulty = direction;
+    delete this.searchOptions.sort_created // they're mutually exclusive with sort_difficulty
     this.loadQuizzes();
   }
 
   onSortCreated(direction: string, event: Event) {
     event.preventDefault();
     this.searchOptions.sort_created = direction;
+    delete this.searchOptions.sort_difficulty // they're mutually exclusive with sort_created
     this.loadQuizzes();
   }
 
