@@ -11,6 +11,11 @@ import {IScore} from "../../models/score.model";
 import {ToastrService} from "ngx-toastr";
 import {map, Observable, switchMap, tap} from "rxjs";
 
+interface QuizWithScores {
+  quiz: IQuizFull;
+  scores: IScore[];
+}
+
 @Component({
   selector: 'app-play',
   standalone: true,
@@ -275,10 +280,10 @@ export class PlayComponent implements OnInit {
       map(params => Number(params.get('quizId') || '0')),
       switchMap(quizId => this.loadQuizWithScores(quizId))
     ).subscribe({
-      next: ([quiz, quizScores]) => {
+      next: ({quiz, scores}) => {
         this.quiz = quiz;
         this.isLoading = false;
-        this.quizScores = quizScores!;
+        this.quizScores = scores!;
         this.totalQuestions = this.quiz?.questions.length || 0 ;
       },
       error: err => {
@@ -288,11 +293,11 @@ export class PlayComponent implements OnInit {
     initFlowbite();
   }
 
-  loadQuizWithScores(id: number): Observable<[IQuizFull, IScore[]]> {
+  loadQuizWithScores(id: number): Observable<QuizWithScores> {
     return this.quizService.getQuizById(id).pipe(
       map((resp) => resp.body!),
       switchMap((loadedQuiz: IQuizFull) =>  this.quizService.getQuizScoresById(loadedQuiz!.id).pipe(
-        map(res => [loadedQuiz, res.body || []] as [IQuizFull, IScore[]])))
+        map(res => ({quiz: loadedQuiz, scores: res.body || []}))))
     )
   }
 
