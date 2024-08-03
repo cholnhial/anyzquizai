@@ -5,6 +5,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {INewQuiz} from "../../models/new-quiz.model";
 import {RouterModule} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-create',
@@ -15,7 +16,8 @@ import {RouterModule} from "@angular/router";
 })
 export class CreateComponent implements OnInit {
 
-  constructor(private quizService: QuizService) {
+  constructor(private quizService: QuizService,
+              private toastr: ToastrService) {
 
   }
 

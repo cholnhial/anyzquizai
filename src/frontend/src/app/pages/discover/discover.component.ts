@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {ActivatedRoute, NavigationExtras, Router, RouterModule} from "@angular/router";
 import {initFlowbite} from "flowbite";
 import {API_BASEURL} from "../../app.constants";
+import {ToastrService} from "ngx-toastr";
 
 
 interface SearchOptions {
@@ -45,6 +46,7 @@ export class DiscoverComponent implements OnInit {
 
   constructor(private quizService: QuizService,
               private router: Router,
+              private toastr: ToastrService,
               private route: ActivatedRoute, ) {
   }
 

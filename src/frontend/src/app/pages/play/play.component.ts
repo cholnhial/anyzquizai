@@ -8,6 +8,7 @@ import confetti from 'canvas-confetti';
 import {FormsModule} from "@angular/forms";
 import {IScoreSubmission} from "../../models/score-submission.model";
 import {IScore} from "../../models/score.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-play',
@@ -259,7 +260,9 @@ export class PlayComponent implements OnInit {
     "Giving up is not an option"
   ]
 
-  constructor(private route: ActivatedRoute, private quizService: QuizService) {
+  constructor(private route: ActivatedRoute,
+              private toastr: ToastrService,
+              private quizService: QuizService) {
   }
 
   setActiveTab(tab: string): void {
