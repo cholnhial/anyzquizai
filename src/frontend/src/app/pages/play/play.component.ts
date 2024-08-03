@@ -9,6 +9,7 @@ import {FormsModule} from "@angular/forms";
 import {IScoreSubmission} from "../../models/score-submission.model";
 import {IScore} from "../../models/score.model";
 import {ToastrService} from "ngx-toastr";
+import {map, Observable, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'app-play',
@@ -270,24 +271,29 @@ export class PlayComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = Number.parseInt(params.get('quizId') || '0');
-      this.loadQuiz(id);
+    this.route.paramMap.pipe(
+      map(params => Number(params.get('quizId') || '0')),
+      switchMap(quizId => this.loadQuizWithScores(quizId))
+    ).subscribe({
+      next: ([quiz, quizScores]) => {
+        this.quiz = quiz;
+        this.isLoading = false;
+        this.quizScores = quizScores!;
+        this.totalQuestions = this.quiz?.questions.length || 0 ;
+      },
+      error: err => {
+        this.toastr.error('An error occurred while loading quiz and its scores', 'Error');
+      }
     });
     initFlowbite();
   }
 
-  loadQuiz(id: number) {
-    this.quizService.getQuizById(id).subscribe({
-      next: resp => {
-        this.quiz = resp.body!!;
-        this.totalQuestions = this.quiz?.questions.length || 0 ;
-        this.loadQuizScores();
-      },
-      error: err => {
-        //TODO: handle error show 404 or something
-      }
-    })
+  loadQuizWithScores(id: number): Observable<[IQuizFull, IScore[]]> {
+    return this.quizService.getQuizById(id).pipe(
+      map((resp) => resp.body!),
+      switchMap((loadedQuiz: IQuizFull) =>  this.quizService.getQuizScoresById(loadedQuiz!.id).pipe(
+        map(res => [loadedQuiz, res.body || []] as [IQuizFull, IScore[]])))
+    )
   }
 
   getQuizAnswersForCurrentQuestionSorted() {
@@ -344,30 +350,24 @@ export class PlayComponent implements OnInit {
    return  this.countries.find((c:any) => c.code === this.selectedCountry)?.name;
   }
 
-  loadQuizScores() {
-    this.quizService.getQuizScoresById(this.quiz!.id).subscribe({
-      next: resp => {
-        this.quizScores = resp.body || [];
-        this.isLoading = false;
-      },
-      error: err => {
-        // TODO handle error
-      }
-    })
-  }
   onSubmitScore() {
     const score: IScoreSubmission = {quizId: this.quiz?.id, nickname: this.nickname, countryCode: this.selectedCountry,totalCorrect: this.totalCorrect };
-    this.quizService.submitScore(score).subscribe({
-      next: resp => {
+    this.quizService.submitScore(score).pipe(
+      tap(() => this.isLoading = true),
+      switchMap(res=>  this.quizService.getQuizScoresById(this.quiz!.id).pipe(
+      map(res => res.body || [] as IScore[]))
+    )).subscribe({
+      next: (quizScores: IScore[]) => {
         this.setActiveTab('leaderboard');
-        this.loadQuizScores();
         this.complete = false;
+        this.quizScores = quizScores;
+        this.isLoading = false;
         this.currentQuestionIndex = 0;
         this.totalCorrect = 0;
         this.resetForNextQuestion();
       },
       error: err => {
-        // TODO: handle error
+        this.toastr.error('Unable to submit your score', 'Error');
       }
     })
   }
