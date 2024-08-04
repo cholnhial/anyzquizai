@@ -87,7 +87,7 @@ public class QuizService {
      * @param quizPhotoPath the path to save the photo  to
      * @param photoBytes the bytes for the photo (retrieve from AI or otherwise)
      */
-    private void savePhoto(String quizPhotoPath, byte[] photoBytes) {
+    public void savePhoto(String quizPhotoPath, byte[] photoBytes) {
         try {
             Path path = Paths.get(quizPhotoPath);
             Files.write(path, photoBytes);

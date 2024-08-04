@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    # URL, username, and password will be set dynamically
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    locations:
+      - classpath:db/migration
+    clean-disabled: false
+    driver-class-name: org.mariadb.jdbc.Driver
+  ai:
+    openai.api-key: ${OPENAI_API_KEY}
+  sql:
+    init:
+      mode: always  # Always initialize the database with data.sql
+      data-locations: classpath:db/testdata/data.sql  # Path to data.sql
+logging:
+  level:
+    org.springframework: INFO
+    org.flywaydb: DEBUG
+
+application:
+  quiz-photos-path: "/tmp"
+  quiz-photo-height: 1024
+  quiz-photo-width: 1024
