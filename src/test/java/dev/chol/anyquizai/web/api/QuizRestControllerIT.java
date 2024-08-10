@@ -1,7 +1,11 @@
 package dev.chol.anyquizai.web.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.chol.anyquizai.dto.QuizCreationRequestDTO;
+import dev.chol.anyquizai.enumeration.Difficulty;
 import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +13,26 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import javax.sql.DataSource;
+import java.sql.SQLException;
+
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -48,6 +60,14 @@ class QuizRestControllerIT {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private DataSource dataSource;
+
+    private final Long TEST_QUIZ_ID = 16L;
+
     @DynamicPropertySource
     static void registerPgProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.password", mariaDB::getPassword);
@@ -55,10 +75,13 @@ class QuizRestControllerIT {
         registry.add("spring.datasource.username", mariaDB::getUsername);
     }
 
-    @AfterEach
-    void cleanDatabase() {
+    @BeforeEach
+    void cleanDatabase() throws SQLException {
         flyway.clean();
         flyway.migrate();
+
+        ScriptUtils.executeSqlScript(dataSource.getConnection(),
+                new ClassPathResource("db/testdata/data.sql"));
     }
 
 
@@ -81,5 +104,71 @@ class QuizRestControllerIT {
                 .andExpect(jsonPath("$.number", is(0)))  // Page numbers are zero-based
                 .andExpect(jsonPath("$.numberOfElements", is(1)));
     }
+
+    @Test
+    void generateQuiz_givenValidQuizRequest_ShouldGenerateQuizWithPhoto() throws Exception {
+
+        QuizCreationRequestDTO requestDTO = new QuizCreationRequestDTO(
+                "Java Programming",
+                Difficulty.MEDIUM,
+                10,
+                18L
+        );
+
+        // Act & Assert
+        MvcResult generateQuizResult = mockMvc.perform(post("/api/quiz")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDTO)))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", containsString("/api/quiz/")))
+                .andExpect(jsonPath("$.categoryId", is(18)))
+                .andExpect(jsonPath("$.difficulty", is("MEDIUM")))
+                .andExpect(jsonPath("$.numberOfQuestions", is(10)))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        String responseContent = generateQuizResult.getResponse().getContentAsString();
+        JsonNode root = objectMapper.readTree(responseContent);
+        Long quizId = root.path("id").asLong();
+
+        // Check photo
+        mockMvc.perform(get("/api/quiz/%d/photo".formatted(quizId))
+                        .accept(MediaType.IMAGE_PNG))
+                .andExpect(status().isOk()) // Assert that the response status is 200
+                .andExpect(content().contentType(MediaType.IMAGE_PNG)) // Assert content type
+                .andExpect(result -> {
+                    byte[] responseBytes = result.getResponse().getContentAsByteArray();
+                    assertTrue(responseBytes.length > 0, "Response byte array should not be empty");
+                });
+    }
+
+    @Test
+    void generateQuiz_givenEmptyQuizTopic_shouldExpectBadRequestStatus400() throws Exception {
+
+        String json = """
+                {
+                  "topic": "",
+                  "difficulty": "EASY",
+                  "numberOfQuestions": 3,
+                  "categoryId": 18
+                }
+                """;
+
+        // Act & Assert
+        mockMvc.perform(post("/api/quiz")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void  getScoresByQuizId_givenAQuizId_shouldReturnListOfCores() throws Exception {
+        mockMvc.perform(get("/api/quiz/%d/score".formatted(TEST_QUIZ_ID))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(greaterThan(0))));
+    }
+
+
 
 }

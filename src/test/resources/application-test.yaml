@@ -13,10 +13,6 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   ai:
     openai.api-key: ${OPENAI_API_KEY}
-  sql:
-    init:
-      mode: always  # Always initialize the database with data.sql
-      data-locations: classpath:db/testdata/data.sql  # Path to data.sql
 logging:
   level:
     org.springframework: INFO
