@@ -2,6 +2,9 @@ spring:
   datasource:
     # URL, username, and password will be set dynamically
     driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      connection-timeout: 120000
+      maximum-pool-size: 5
   jpa:
     hibernate:
       ddl-auto: validate

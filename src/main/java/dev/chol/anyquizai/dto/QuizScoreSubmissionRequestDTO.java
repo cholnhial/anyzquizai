@@ -1,10 +1,11 @@
 package dev.chol.anyquizai.dto;
 
 import dev.chol.anyquizai.domain.jpa.Score;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-public record QuizScoreSubmissionRequestDTO(@NotEmpty Long quizId, @NotEmpty String nickname,
-                                            @NotEmpty Integer totalCorrect, @NotEmpty String countryCode) {
+public record QuizScoreSubmissionRequestDTO(@NotNull Long quizId, @NotBlank String nickname,
+                                            @NotNull Integer totalCorrect, @NotBlank String countryCode) {
 
     public Score toScore(long quizTotalQuestions) {
         return Score.builder()
