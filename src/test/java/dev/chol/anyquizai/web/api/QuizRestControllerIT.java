@@ -213,7 +213,7 @@ class QuizRestControllerIT {
     @Test
     void getAll_givenSortingDifficultyDESC_shouldExpectFirstToBeHardAndLastToBeEasy()
         throws Exception {
-        mockMvc.perform(get("/api/quiz?page=0&size=100&sort=difficulty=DESC"))
+        mockMvc.perform(get("/api/quiz?page=0&size=100&sort_difficulty=DESC"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.content", notNullValue()))
