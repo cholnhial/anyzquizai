@@ -13,6 +13,8 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   ai:
     openai.api-key: ${OPENAI_API_KEY}
+  elasticsearch:
+    uris: ${elasticsearch.uris}
 logging:
   level:
     org.springframework: INFO

@@ -28,25 +28,10 @@ public class QuizSearchService {
      * Uses search parameters provided to find the quizzes that match
      *
      * @param searchDto DTO containing search parameters
-     * @return
+     * @return search hits
      */
     public Page<Quiz> processSearch(SearchDTO searchDto) {
-        Criteria criteria = new Criteria("title");
-        if (searchDto.getTitle() != null) {
-            criteria.matches("*%s*".formatted(searchDto.getTitle()));
-        }
-
-        if (searchDto.getCategoryId() != null) {
-            criteria.and(new Criteria("categoryId").is(searchDto.getCategoryId()));
-        }
-
-        if (searchDto.getNumberOfQuestions() != null) {
-            criteria.and(new Criteria("questions").is(searchDto.getNumberOfQuestions()));
-        }
-
-        if (searchDto.getDifficulty() != null) {
-            criteria.and(new Criteria("difficulty").is(searchDto.getDifficulty()));
-        }
+        Criteria criteria = buildCriteria(searchDto);
         Query searchQuery = new CriteriaQuery(criteria);
 
         if (searchDto.getSortByCreatedDate() != null)  {
@@ -73,6 +58,27 @@ public class QuizSearchService {
         return  new PageImpl<>(quizzes.get().map(SearchHit::getContent).collect(Collectors.toList()),pageable,
                 (int) quizzes.getTotalHits());
 
+    }
+
+    public Criteria buildCriteria(SearchDTO searchDto) {
+        Criteria criteria = new Criteria("title");
+        if (searchDto.getTitle() != null) {
+            criteria.matches("*%s*".formatted(searchDto.getTitle()));
+        }
+
+        if (searchDto.getCategoryId() != null) {
+            criteria.and(new Criteria("categoryId").is(searchDto.getCategoryId()));
+        }
+
+        if (searchDto.getNumberOfQuestions() != null) {
+            criteria.and(new Criteria("questions").is(searchDto.getNumberOfQuestions()));
+        }
+
+        if (searchDto.getDifficulty() != null) {
+            criteria.and(new Criteria("difficulty").is(searchDto.getDifficulty()));
+        }
+
+        return criteria;
     }
 
 

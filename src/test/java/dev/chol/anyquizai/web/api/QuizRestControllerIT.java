@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.chol.anyquizai.dto.QuizCreationRequestDTO;
 import dev.chol.anyquizai.enumeration.Difficulty;
+import dev.chol.anyquizai.service.QuizSearchService;
+import dev.chol.anyquizai.service.QuizService;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.testcontainers.containers.MariaDBContainer;
+import org.testcontainers.elasticsearch.ElasticsearchContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -64,6 +67,12 @@ class QuizRestControllerIT {
     private ObjectMapper objectMapper;
 
     @Autowired
+    private QuizSearchService quizSearchService;
+
+    @Autowired
+    private QuizService quizService;
+
+    @Autowired
     private DataSource dataSource;
 
     private final Long TEST_QUIZ_ID = 16L;
@@ -75,6 +84,16 @@ class QuizRestControllerIT {
         registry.add("spring.datasource.username", mariaDB::getUsername);
     }
 
+
+    @Container
+    static ElasticsearchContainer elasticsearchContainer = new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.17.10");
+
+    @DynamicPropertySource
+    static void elasticsearchProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.elasticsearch.uris", elasticsearchContainer::getHttpHostAddress);
+    }
+
+
     @BeforeEach
     void cleanDatabase() throws SQLException {
         flyway.clean();
@@ -82,6 +101,23 @@ class QuizRestControllerIT {
 
         ScriptUtils.executeSqlScript(dataSource.getConnection(),
                 new ClassPathResource("db/testdata/data.sql"));
+    }
+
+    @BeforeEach
+    void buildElasticQuizIndex() {
+        this.quizService.getAll().forEach(quiz -> {
+            var elasticQuizBuilder = dev.chol.anyquizai.domain.elasticsearch.Quiz.builder();
+            elasticQuizBuilder.id(quiz.getId());
+            elasticQuizBuilder.title(quiz.getTitle());
+            elasticQuizBuilder.categoryId(quiz.getCategory().getId());
+            elasticQuizBuilder.difficulty(quiz.getDifficulty().toString());
+            elasticQuizBuilder._difficulty(quiz.getDifficulty().getValue());
+            elasticQuizBuilder.uniqueCode(quiz.getUniqueCode());
+            elasticQuizBuilder.questions(quiz.getTotalQuestions());
+            elasticQuizBuilder.created(quiz.getCreated());
+            elasticQuizBuilder.created(quiz.getCreated());
+            quizSearchService.createQuizIndex(elasticQuizBuilder.build());
+        });
     }
 
 
@@ -100,7 +136,7 @@ class QuizRestControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", notNullValue()))
-                .andExpect(jsonPath("$.totalElements", notNullValue()))
+                .andExpect(jsonPath("$.totalElements", is(0)))
                 .andExpect(jsonPath("$.number", is(0)))  // Page numbers are zero-based
                 .andExpect(jsonPath("$.numberOfElements", is(1)));
     }

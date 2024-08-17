@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -94,6 +95,14 @@ public class QuizService {
         } catch (IOException e) {
             throw new SavePhotoException(quizPhotoPath, e.getMessage());
         }
+    }
+
+    /**
+     * Retrieves all quizzes saved in DB
+     * @return list of quizzes
+     */
+    public List<Quiz> getAll() {
+        return this.quizRepository.findAll();
     }
 
 
