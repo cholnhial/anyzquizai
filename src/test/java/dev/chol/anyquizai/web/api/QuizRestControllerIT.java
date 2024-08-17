@@ -211,6 +211,17 @@ class QuizRestControllerIT {
     }
 
     @Test
+    void getAll_givenSortingDifficultyDESC_shouldExpectFirstToBeHardAndLastToBeEasy()
+        throws Exception {
+        mockMvc.perform(get("/api/quiz?page=0&size=100&sort=difficulty=DESC"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.content", notNullValue()))
+            .andExpect(jsonPath("$.content[0].difficulty", is("HARD")))
+            .andExpect(jsonPath("$.content[-1].difficulty", is("EASY")));
+    }
+
+    @Test
     void getAll_givenDifficultyOfHard_shouldOnlyReturnHardQuizzes() throws Exception {
         mockMvc.perform(get("/api/quiz?page=1&size=100&difficulty=HARD"))
             .andExpect(status().isOk())
