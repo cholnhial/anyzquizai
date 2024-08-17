@@ -7,14 +7,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
-public record QuizCreationRequestDTO (
-    @NotBlank
-    String topic,
-    @NotNull
-    Difficulty difficulty,
-    @Min(value = 5)
-    @Max(value = 30)
-    Integer numberOfQuestions,
-    @NotNull
-    Long categoryId
-) {}
+public record QuizCreationRequestDTO(
+        @NotBlank
+        String topic,
+        @NotNull
+        Difficulty difficulty,
+        @Min(value = 5)
+        @Max(value = 30)
+        Integer numberOfQuestions,
+        @NotNull
+        Long categoryId
+) {
+}

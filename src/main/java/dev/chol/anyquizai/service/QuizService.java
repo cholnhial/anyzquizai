@@ -8,17 +8,20 @@ import dev.chol.anyquizai.dto.QuizDTO;
 import dev.chol.anyquizai.exception.QuizNotFoundException;
 import dev.chol.anyquizai.exception.SavePhotoException;
 import dev.chol.anyquizai.repository.jpa.QuizRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+/**
+ *  Quiz Service is responsible for interacting with OpenAI through Spring AI and
+ *  generating a Quiz DTO
+ */
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -33,7 +36,7 @@ public class QuizService {
     /**
      * Save a generated quiz for a given category and generate its photo and save it to disk
      *
-     * @param quizAIDTO the newly generated quiz to save
+     * @param quizAIDTO  the newly generated quiz to save
      * @param categoryId the category to save the quiz under
      * @return an entity persisted of the new quiz
      */
@@ -85,8 +88,9 @@ public class QuizService {
 
     /**
      * Saves an already generated quiz photo to disk
+     *
      * @param quizPhotoPath the path to save the photo  to
-     * @param photoBytes the bytes for the photo (retrieve from AI or otherwise)
+     * @param photoBytes    the bytes for the photo (retrieve from AI or otherwise)
      */
     public void savePhoto(String quizPhotoPath, byte[] photoBytes) {
         try {
@@ -99,6 +103,7 @@ public class QuizService {
 
     /**
      * Retrieves all quizzes saved in DB
+     *
      * @return list of quizzes
      */
     public List<Quiz> getAll() {

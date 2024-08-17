@@ -1,6 +1,11 @@
 package dev.chol.anyquizai.config;
 
+import static java.net.URLDecoder.decode;
+
 import jakarta.servlet.ServletContext;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.server.WebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -8,12 +13,6 @@ import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
-
-import static java.net.URLDecoder.decode;
 
 /**
  * Configuration of web application with Servlet 3.0 APIs.
@@ -55,7 +54,6 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
             }
         }
     }
-
 
 
     /**

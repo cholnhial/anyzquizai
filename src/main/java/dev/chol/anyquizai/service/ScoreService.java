@@ -5,12 +5,11 @@ import dev.chol.anyquizai.domain.jpa.Score;
 import dev.chol.anyquizai.dto.QuizScoreSubmissionRequestDTO;
 import dev.chol.anyquizai.exception.NickNameTakenException;
 import dev.chol.anyquizai.repository.jpa.ScoreRepository;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,22 +20,20 @@ public class ScoreService {
     private final QuizService quizService;
 
     /**
-     *
      * Saves a new score for the players
-     *
      *
      * @param scoreDto the request DTO containing info for the new score
      * @return a persisted score entity
      */
     @Transactional
     public Score saveNewScore(QuizScoreSubmissionRequestDTO scoreDto) {
-            if (getOneByNickname(scoreDto.nickname(), scoreDto.quizId()).isPresent()) {
-                throw new NickNameTakenException(scoreDto.nickname());
-            }
-           Quiz quiz = quizService.getQuizById(scoreDto.quizId());
-           Score newQuizScore = scoreDto.toScore(quiz.getTotalQuestions());
-           newQuizScore.setQuiz(quiz);
-           return scoreRepository.save(newQuizScore);
+        if (getOneByNickname(scoreDto.nickname(), scoreDto.quizId()).isPresent()) {
+            throw new NickNameTakenException(scoreDto.nickname());
+        }
+        Quiz quiz = quizService.getQuizById(scoreDto.quizId());
+        Score newQuizScore = scoreDto.toScore(quiz.getTotalQuestions());
+        newQuizScore.setQuiz(quiz);
+        return scoreRepository.save(newQuizScore);
     }
 
     /**
@@ -49,7 +46,7 @@ public class ScoreService {
         return scoreRepository.findAllByQuizIdOrderByScoreDesc(quizId);
     }
 
-   public Optional<Score> getOneByNickname(String nickname, Long quizId) {
+    public Optional<Score> getOneByNickname(String nickname, Long quizId) {
         return scoreRepository.findOneByNickNameAndQuizId(nickname, quizId);
     }
 

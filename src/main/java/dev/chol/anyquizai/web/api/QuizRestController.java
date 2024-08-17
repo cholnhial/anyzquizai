@@ -2,7 +2,12 @@ package dev.chol.anyquizai.web.api;
 
 import dev.chol.anyquizai.domain.jpa.Quiz;
 import dev.chol.anyquizai.domain.jpa.Score;
-import dev.chol.anyquizai.dto.*;
+import dev.chol.anyquizai.dto.QuizAIDTO;
+import dev.chol.anyquizai.dto.QuizCreationRequestDTO;
+import dev.chol.anyquizai.dto.QuizDTO;
+import dev.chol.anyquizai.dto.QuizScoreSubmissionRequestDTO;
+import dev.chol.anyquizai.dto.ScoreDTO;
+import dev.chol.anyquizai.dto.SearchDTO;
 import dev.chol.anyquizai.service.AIQuizGeneratorService;
 import dev.chol.anyquizai.service.QuizSearchService;
 import dev.chol.anyquizai.service.QuizService;
@@ -14,6 +19,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -21,13 +31,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -108,7 +118,7 @@ public class QuizRestController {
             searchOptionsBuilder.categoryId(searchOptions.get("categoryId"));
         }
 
-        if(searchOptions.containsKey("questions")) {
+        if (searchOptions.containsKey("questions")) {
             searchOptionsBuilder.numberOfQuestions(Integer.valueOf(searchOptions.get("questions")));
         }
 

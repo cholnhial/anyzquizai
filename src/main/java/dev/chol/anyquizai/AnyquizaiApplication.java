@@ -5,11 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
-@ConfigurationPropertiesScan( basePackages = {"dev.chol.anyquizai"})
+@ConfigurationPropertiesScan(basePackages = {"dev.chol.anyquizai"})
 public class AnyquizaiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AnyquizaiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AnyquizaiApplication.class, args);
+    }
 
 }

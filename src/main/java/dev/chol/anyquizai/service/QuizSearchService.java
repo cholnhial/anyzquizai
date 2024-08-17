@@ -2,6 +2,7 @@ package dev.chol.anyquizai.service;
 
 import dev.chol.anyquizai.domain.elasticsearch.Quiz;
 import dev.chol.anyquizai.dto.SearchDTO;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,10 +12,12 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
-import org.springframework.data.elasticsearch.core.query.*;
+import org.springframework.data.elasticsearch.core.query.Criteria;
+import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
+import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +37,7 @@ public class QuizSearchService {
         Criteria criteria = buildCriteria(searchDto);
         Query searchQuery = new CriteriaQuery(criteria);
 
-        if (searchDto.getSortByCreatedDate() != null)  {
+        if (searchDto.getSortByCreatedDate() != null) {
             searchQuery.addSort(Sort.by(searchDto.getSortByCreatedDate(), "created"));
         }
 
@@ -55,7 +58,7 @@ public class QuizSearchService {
                         Quiz.class,
                         IndexCoordinates.of(QUIZ_INDEX_NAME));
 
-        return  new PageImpl<>(quizzes.get().map(SearchHit::getContent).collect(Collectors.toList()),pageable,
+        return new PageImpl<>(quizzes.get().map(SearchHit::getContent).collect(Collectors.toList()), pageable,
                 (int) quizzes.getTotalHits());
 
     }

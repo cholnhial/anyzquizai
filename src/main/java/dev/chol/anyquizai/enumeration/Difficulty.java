@@ -2,7 +2,6 @@ package dev.chol.anyquizai.enumeration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @AllArgsConstructor

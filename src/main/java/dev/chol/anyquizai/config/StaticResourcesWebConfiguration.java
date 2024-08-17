@@ -8,10 +8,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
 
-    protected static final String[] RESOURCE_LOCATIONS = new String[] {
+    protected static final String[] RESOURCE_LOCATIONS = new String[]{
             "classpath:/static/"
     };
-    protected static final String[] RESOURCE_PATHS = new String[] {
+    protected static final String[] RESOURCE_PATHS = new String[]{
             "/*.js",
             "/*.css",
             "/*.svg",
