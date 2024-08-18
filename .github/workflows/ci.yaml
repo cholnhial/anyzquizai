@@ -1,0 +1,61 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+            **/.cache
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies and build frontend
+        run: |
+          cd src/frontend
+          npm install
+          npm run build
+
+      - name: Build and test backend
+        run: mvn clean verify
+
+      - name: Run Angular tests
+        run: |
+          cd src/frontend
+          npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Run Cypress tests
+        run: |
+          cd src/frontend
+          npm run cypress:run
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: target/test-outputs/
