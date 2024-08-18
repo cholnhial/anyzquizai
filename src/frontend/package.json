@@ -9,7 +9,11 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "build:prod": "ng build --configuration production",
+    "start:prod": "http-server ./dist -a localhost -p 4200",
+    "build-and-start:prod": "run-s build:prod start:prod",
+    "e2e": "start-server-and-test build-and-start:prod http://localhost:4200 cypress:run"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +46,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "start-server-and-test": "^2.0.5",
     "tailwindcss": "^3.4.3",
     "typescript": "~5.4.2"
   }

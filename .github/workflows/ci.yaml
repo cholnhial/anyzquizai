@@ -57,7 +57,7 @@ jobs:
       - name: Run Cypress tests
         run: |
           cd src/frontend
-          npm run cypress:run
+          npm run e2e
 
       - name: Upload test results
         uses: actions/upload-artifact@v3
