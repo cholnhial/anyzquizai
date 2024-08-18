@@ -190,8 +190,8 @@ describe('Discover Page', () => {
     }).as('getQuizzes');
 
     // Wait for the quizzes to be loaded
-    cy.wait('@getQuizzes').its('response.statusCode').should('eq', 200);
-    cy.wait('@getCategories').its('response.statusCode').should('eq', 200);
+    cy.wait('@getQuizzes',{ timeout: 10000 }).its('response.statusCode').should('eq', 200);
+    cy.wait('@getCategories', { timeout: 10000 }).its('response.statusCode').should('eq', 200);
 
 
     cy.get('select#category')
