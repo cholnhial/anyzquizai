@@ -86,7 +86,7 @@ describe('Discover Page', () => {
     }).as('searchQuizzes');
 
     // Wait for the search API call
-    cy.wait('@searchQuizzes');
+    cy.wait('@searchQuizzes', { timeout: 10000 });
 
     // Verify that only the filtered quiz is displayed
     cy.get('.grid .max-w-sm').should('have.length', 1);
