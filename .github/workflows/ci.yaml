@@ -65,9 +65,3 @@ jobs:
         env:
           CYPRESS_DEFAULT_COMMAND_TIMEOUT: 10000
           CYPRESS_REQUEST_TIMEOUT: 10000
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: target/test-outputs/
