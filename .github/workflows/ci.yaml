@@ -54,10 +54,16 @@ jobs:
           cd src/frontend
           npm run test -- --watch=false --browsers=ChromeHeadless
 
-      - name: Run Cypress tests
-        run: |
-          cd src/frontend
-          npm run e2e
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+            build: npm run build
+            start: npm start
+            wait-on: 'http://localhost:4200'
+            wait-on-timeout: 120
+        env:
+          CYPRESS_DEFAULT_COMMAND_TIMEOUT: 10000
+          CYPRESS_REQUEST_TIMEOUT: 10000
 
       - name: Upload test results
         uses: actions/upload-artifact@v3
