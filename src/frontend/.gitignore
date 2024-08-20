@@ -42,3 +42,4 @@ testem.log
 Thumbs.db
 /cypress/results/
 /cypress/screenshots/
+/karma-results/
