@@ -27,8 +27,7 @@ describe('QuizService', () => {
   });
 
   it('should be created', () => {
-   // expect(service).toBeTruthy();
-    fail();
+    expect(service).toBeTruthy();
   });
 
 
