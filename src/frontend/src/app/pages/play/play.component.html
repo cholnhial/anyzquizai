@@ -1,26 +1,30 @@
 <div class="flex justify-center pt-10 max-w-4xl mx-auto p-6 bg-white rounded-t-lg shadow-md dark:bg-gray-800">
   <div class="flex space-x-4">
-    <div class="inline-flex h-9 w-full items-baseline justify-start rounded-lg bg-gray-100 p-1 sm:w-auto dark:bg-gray-900">
-      <button type="button"
-              (click)="setActiveTab('play')"
+    <div
+      class="inline-flex h-9 w-full items-baseline justify-start rounded-lg bg-gray-100 p-1 sm:w-auto dark:bg-gray-900">
+      <button (click)="setActiveTab('play')"
               [ngClass]="{'bg-white text-slate-950 dark:bg-gray-800 dark:text-white': activeTab === 'play',
                          'bg-transparent text-slate-500 dark:text-gray-400': activeTab !== 'play'}"
-              class="group inline-flex items-center justify-center whitespace-nowrap py-2 align-middle font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed stroke-blue-700 min-w-[32px] gap-1.5 text-xs disabled:stroke-slate-400 disabled:text-slate-400 hover:stroke-blue-950 hover:text-blue-950 h-7 w-full rounded-md px-3 shadow sm:w-auto">
-        <svg class="w-[20px] h-[20px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.529 9.988a2.502 2.502 0 1 1 5 .191A2.441 2.441 0 0 1 12 12.582V14m-.01 3.008H12M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              class="group inline-flex items-center justify-center whitespace-nowrap py-2 align-middle font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed stroke-blue-700 min-w-[32px] gap-1.5 text-xs disabled:stroke-slate-400 disabled:text-slate-400 hover:stroke-blue-950 hover:text-blue-950 h-7 w-full rounded-md px-3 shadow sm:w-auto"
+              type="button">
+        <svg aria-hidden="true" class="w-[20px] h-[20px] text-gray-800 dark:text-white"
+             fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.529 9.988a2.502 2.502 0 1 1 5 .191A2.441 2.441 0 0 1 12 12.582V14m-.01 3.008H12M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" />
         </svg>
-
 
 
         <span>Play</span>
       </button>
-      <button type="button"
-              (click)="setActiveTab('leaderboard')"
+      <button (click)="setActiveTab('leaderboard')"
               [ngClass]="{'bg-white text-slate-950 dark:bg-gray-800 dark:text-white': activeTab === 'leaderboard',
                          'bg-transparent text-slate-500 dark:text-gray-400': activeTab !== 'leaderboard'}"
-              class="group inline-flex items-center justify-center whitespace-nowrap py-2 align-middle font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed stroke-blue-700 min-w-[32px] gap-1.5 text-xs disabled:stroke-slate-400 disabled:text-slate-400 hover:stroke-blue-950 hover:text-blue-950 h-7 w-full rounded-md px-3 shadow sm:w-auto">
-        <svg class="w-[20px] h-[20px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-width="2" d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"/>
+              class="group inline-flex items-center justify-center whitespace-nowrap py-2 align-middle font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed stroke-blue-700 min-w-[32px] gap-1.5 text-xs disabled:stroke-slate-400 disabled:text-slate-400 hover:stroke-blue-950 hover:text-blue-950 h-7 w-full rounded-md px-3 shadow sm:w-auto"
+              type="button">
+        <svg aria-hidden="true" class="w-[20px] h-[20px] text-gray-800 dark:text-white"
+             fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z" stroke="currentColor"
+                stroke-width="2" />
         </svg>
 
         <span>Leaderboard</span>
@@ -28,18 +32,22 @@
     </div>
   </div>
 </div>
-<div  class="max-w-4xl mb-8 mx-auto min-h-[70vh] bg-gray-300 dark:bg-gray-900">
+<div class="max-w-4xl mb-8 mx-auto min-h-[70vh] bg-gray-300 dark:bg-gray-900">
   <div *ngIf="!complete && activeTab == 'play'" class="mx-auto p-6 text-center">
     <ng-container *ngIf="!isLoading; else loadingContent">
-      <h1 class="text-3xl font-bold mb-6 text-gray-700 dark:text-gray-300">{{ quiz?.title}}</h1>
+      <h1 class="text-3xl font-bold mb-6 text-gray-700 dark:text-gray-300">{{ quiz?.title }}</h1>
       <h1 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">{{ getCurrentQuestion() }}</h1>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2 answers-mt">
-        <button (click)="onAnswer(answer.answerLetter)" *ngFor="let answer of getQuizAnswersForCurrentQuestionSorted()" class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50  focus:outline-none">
-          <span class="text-xl font-bold mr-2">{{answer.answerLetter}}.</span>
-          <span>{{ answer.answerTitle}}</span>
+        <button (click)="onAnswer(answer.answerLetter)" *ngFor="let answer of getQuizAnswersForCurrentQuestionSorted()"
+                class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50  focus:outline-none">
+          <span class="text-xl font-bold mr-2">{{ answer.answerLetter }}.</span>
+          <span>{{ answer.answerTitle }}</span>
 
-          <svg *ngIf="isAnswerWrong && answer.answerLetter === getCurrentQuestionCorrectAnswerLetter()" class="w-[30px] h-[30px] text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          <svg *ngIf="isAnswerWrong && answer.answerLetter === getCurrentQuestionCorrectAnswerLetter()"
+               aria-hidden="true" class="w-[30px] h-[30px] text-green-500" fill="none" height="24"
+               viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2" />
           </svg>
 
         </button>
@@ -65,26 +73,36 @@
         </div>
       </div>
     </ng-template>
-    <div *ngIf="isAnswerWrong" class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
-      <svg class="w-[48px] h-[48px] text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+    <div *ngIf="isAnswerWrong"
+         class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
+      <svg aria-hidden="true" class="w-[48px] h-[48px] text-red-600" fill="none" height="24"
+           viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2" />
       </svg>
       <h1 class="text-3xl font-bold dark:text-white">Wrong!</h1>
-      <p class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">{{ 'The correct answer is ' + getCurrentQuestionCorrectAnswerLetter()}}</p>
+      <p
+        class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">{{ 'The correct answer is ' + getCurrentQuestionCorrectAnswerLetter() }}</p>
     </div>
-    <div *ngIf="isAnswerCorrect" class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
-      <svg class="w-[48px] h-[48px] text-green-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+    <div *ngIf="isAnswerCorrect"
+         class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
+      <svg aria-hidden="true" class="w-[48px] h-[48px] text-green-600 dark:text-white"
+           fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2" />
       </svg>
 
       <h1 class="text-3xl font-bold dark:text-white">Well Done!</h1>
       <p class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">{{ successMessage }}</p>
     </div>
     <div class="flex-1">
-      <button type="button" *ngIf="nextQuestionIsReady" (click)="onNext()" class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center w-full dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      <button (click)="onNext()" *ngIf="nextQuestionIsReady" class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center w-full dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              type="button">
         Next
-        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        <svg aria-hidden="true" class="rtl:rotate-180 w-3.5 h-3.5 ms-2" fill="none" viewBox="0 0 14 10"
+             xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" />
         </svg>
       </button>
     </div>
@@ -94,9 +112,9 @@
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs sticky top-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="py-3 px-6">Country</th>
-          <th scope="col" class="py-3 px-6">Nickname</th>
-          <th scope="col" class="py-3 px-6">Score</th>
+          <th class="py-3 px-6" scope="col">Country</th>
+          <th class="py-3 px-6" scope="col">Nickname</th>
+          <th class="py-3 px-6" scope="col">Score</th>
         </tr>
         </thead>
         <tbody>
@@ -111,36 +129,42 @@
       </table>
     </div>
   </div>
-  <div [ngClass]="{'hidden': !complete || activeTab === 'leaderboard'}"  class="mx-auto p-6 text-center">
-    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">{{ totalCorrect + '/' + totalQuestions}}</span></h1>
+  <div [ngClass]="{'hidden': !complete || activeTab === 'leaderboard'}" class="mx-auto p-6 text-center">
+    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
+      class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">{{ totalCorrect + '/' + totalQuestions }}</span>
+    </h1>
     <h3 class="text-3xl font-bold dark:text-white">Well Done! 👏</h3>
-    <div class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800 shadow-md">
+    <div
+      class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800 shadow-md">
       <h1 class="text-2xl font-bold mb-4 dark:text-white">Join Leaderboard</h1>
       <div class="w-full mb-4">
-        <label for="country" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white" for="country">
           Select Country
         </label>
         <div class="relative" id="country">
           <button
-            id="dropdownButton"
-            data-dropdown-toggle="dropdown"
             class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-left text-gray-700 bg-gray-50 border border-gray-300 rounded-lg dark:text-white dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            data-dropdown-toggle="dropdown"
+            id="dropdownButton"
             type="button"
           >
             <span class="fi fi-{{ selectedCountry }}"></span> {{ getSelectedCountry() }}
-            <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
             </svg>
           </button>
           <div
-            id="dropdown"
             class="hidden z-10 w-full mt-1 bg-white rounded-lg shadow-md dark:bg-gray-700  max-h-60 overflow-y-auto"
-            data-popper-reference-hidden
             data-popper-escaped
             data-popper-placement="bottom"
+            data-popper-reference-hidden
+            id="dropdown"
           >
-            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownButton">
-              <li *ngFor="let country of countries" (click)="selectedCountry = country.code;  document.getElementById('dropdownButton')?.click()" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600">
+            <ul aria-labelledby="dropdownButton" class="py-1 text-sm text-gray-700 dark:text-gray-200">
+              <li (click)="selectedCountry = country.code;  document.getElementById('dropdownButton')?.click()"
+                  *ngFor="let country of countries"
+                  class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600">
                 <span class="fi fi-{{ country.code }} mr-2"></span> {{ country.name }}
               </li>
             </ul>
@@ -150,11 +174,17 @@
 
 
       <div class="w-full mb-4">
-        <label for="nickname" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Nickname</label>
-        <input  type="text" #nickNameInput="ngModel" required [(ngModel)]="nickname" name="nickname" id="nickname" class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your nickname">
+        <label class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white"
+               for="nickname">Nickname</label>
+        <input #nickNameInput="ngModel" [(ngModel)]="nickname" class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="nickname" name="nickname" placeholder="Enter your nickname"
+               required
+               type="text">
       </div>
 
-      <button (click)="onSubmitScore()" [disabled]="nickNameInput.invalid" type="button" class="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">Join</button>
+      <button (click)="onSubmitScore()" [disabled]="nickNameInput.invalid" class="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+              type="button">
+        Join
+      </button>
     </div>
   </div>
 </div>

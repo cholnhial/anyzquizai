@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
-import {IQuizFull} from "../../models/quiz-full.model";
-import {QuizService} from "../../services/quiz.service";
-import {initFlowbite} from "flowbite";
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { IQuizFull } from '../../models/quiz-full.model';
+import { QuizService } from '../../services/quiz.service';
+import { initFlowbite } from 'flowbite';
 import confetti from 'canvas-confetti';
-import {FormsModule} from "@angular/forms";
-import {IScoreSubmission} from "../../models/score-submission.model";
-import {IScore} from "../../models/score.model";
-import {ToastrService} from "ngx-toastr";
-import {map, Observable, switchMap, tap} from "rxjs";
+import { FormsModule } from '@angular/forms';
+import { IScoreSubmission } from '../../models/score-submission.model';
+import { IScore } from '../../models/score.model';
+import { ToastrService } from 'ngx-toastr';
+import { map, Observable, switchMap, tap } from 'rxjs';
 
 interface QuizWithScores {
   quiz: IQuizFull;
@@ -21,7 +21,7 @@ interface QuizWithScores {
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './play.component.html',
-  styleUrl: './play.component.scss'
+  styleUrl: './play.component.scss',
 })
 export class PlayComponent implements OnInit {
 
@@ -243,28 +243,29 @@ export class PlayComponent implements OnInit {
     { code: 'vn', name: 'Vietnam' },
     { code: 'ye', name: 'Yemen' },
     { code: 'zm', name: 'Zambia' },
-    { code: 'zw', name: 'Zimbabwe' }
+    { code: 'zw', name: 'Zimbabwe' },
   ];
 
   selectedCountry = this.countries[0].code;
 
   successMessages = [
-    "You're killing it!",
-    "No doubt about you mate!",
-    "You are the master",
-    "This is a walk in the park for you isn't it?",
-    "Mate leave some for us",
-    "Stunning!"
+    'You\'re killing it!',
+    'No doubt about you mate!',
+    'You are the master',
+    'This is a walk in the park for you isn\'t it?',
+    'Mate leave some for us',
+    'Stunning!',
   ];
 
   wrongMessages = [
-    "We will get them next time",
-    "Even ChatGPT is better than you",
-    "Do you need your mummy",
-    "Come on you can do this!",
-    "Never give up!",
-    "Giving up is not an option"
-  ]
+    'We will get them next time',
+    'Even ChatGPT is better than you',
+    'Do you need your mummy',
+    'Come on you can do this!',
+    'Never give up!',
+    'Giving up is not an option',
+  ];
+  protected readonly document = document;
 
   constructor(private route: ActivatedRoute,
               private toastr: ToastrService,
@@ -278,17 +279,17 @@ export class PlayComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.pipe(
       map(params => Number(params.get('quizId') || '0')),
-      switchMap(quizId => this.loadQuizWithScores(quizId))
+      switchMap(quizId => this.loadQuizWithScores(quizId)),
     ).subscribe({
-      next: ({quiz, scores}) => {
+      next: ({ quiz, scores }) => {
         this.quiz = quiz;
         this.isLoading = false;
         this.quizScores = scores!;
-        this.totalQuestions = this.quiz?.questions.length || 0 ;
+        this.totalQuestions = this.quiz?.questions.length || 0;
       },
       error: err => {
         this.toastr.error('An error occurred while loading quiz and its scores', 'Error');
-      }
+      },
     });
     initFlowbite();
   }
@@ -296,16 +297,15 @@ export class PlayComponent implements OnInit {
   loadQuizWithScores(id: number): Observable<QuizWithScores> {
     return this.quizService.getQuizById(id).pipe(
       map((resp) => resp.body!),
-      switchMap((loadedQuiz: IQuizFull) =>  this.quizService.getQuizScoresById(loadedQuiz!.id).pipe(
-        map(res => ({quiz: loadedQuiz, scores: res.body || []}))))
-    )
+      switchMap((loadedQuiz: IQuizFull) => this.quizService.getQuizScoresById(loadedQuiz!.id).pipe(
+        map(res => ({ quiz: loadedQuiz, scores: res.body || [] })))),
+    );
   }
 
   getQuizAnswersForCurrentQuestionSorted() {
-     return this.quiz?.questions[this.currentQuestionIndex]
-       .answers.
-       sort((a, b) => (a.answerLetter > b.answerLetter)
-         ? 1 : ((b.answerLetter > a.answerLetter) ? -1 : 0));
+    return this.quiz?.questions[this.currentQuestionIndex]
+      .answers.sort((a, b) => (a.answerLetter > b.answerLetter)
+        ? 1 : ((b.answerLetter > a.answerLetter) ? -1 : 0));
   }
 
   getCurrentQuestion() {
@@ -330,7 +330,7 @@ export class PlayComponent implements OnInit {
       confetti({
         particleCount: 100,
         spread: 70,
-        origin: { y: 0.6 }
+        origin: { y: 0.6 },
       });
     }
   }
@@ -346,22 +346,28 @@ export class PlayComponent implements OnInit {
     this.isAnswerCorrect = false;
     this.nextQuestionIsReady = false;
   }
+
   onNext() {
     this.resetForNextQuestion();
     this.currentQuestionIndex++;
   }
 
   getSelectedCountry() {
-   return  this.countries.find((c:any) => c.code === this.selectedCountry)?.name;
+    return this.countries.find((c: any) => c.code === this.selectedCountry)?.name;
   }
 
   onSubmitScore() {
-    const score: IScoreSubmission = {quizId: this.quiz?.id, nickname: this.nickname, countryCode: this.selectedCountry,totalCorrect: this.totalCorrect };
+    const score: IScoreSubmission = {
+      quizId: this.quiz?.id,
+      nickname: this.nickname,
+      countryCode: this.selectedCountry,
+      totalCorrect: this.totalCorrect,
+    };
     this.quizService.submitScore(score).pipe(
       tap(() => this.isLoading = true),
-      switchMap(res=>  this.quizService.getQuizScoresById(this.quiz!.id).pipe(
-      map(res => res.body || [] as IScore[]))
-    )).subscribe({
+      switchMap(res => this.quizService.getQuizScoresById(this.quiz!.id).pipe(
+        map(res => res.body || [] as IScore[])),
+      )).subscribe({
       next: (quizScores: IScore[]) => {
         this.setActiveTab('leaderboard');
         this.complete = false;
@@ -373,9 +379,7 @@ export class PlayComponent implements OnInit {
       },
       error: err => {
         this.toastr.error('Unable to submit your score', 'Error');
-      }
-    })
+      },
+    });
   }
-
-  protected readonly document = document;
 }

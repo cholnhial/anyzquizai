@@ -1,12 +1,12 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {DiscoverComponent} from './discover.component';
-import {QuizService} from '../../services/quiz.service';
-import {ToastrService} from 'ngx-toastr';
-import {ActivatedRoute, Router} from '@angular/router';
-import {of} from 'rxjs';
-import {HttpResponse} from '@angular/common/http';
-import {ICategory} from '../../models/category.model';
-import {IQuiz} from '../../models/quiz.model';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { DiscoverComponent } from './discover.component';
+import { QuizService } from '../../services/quiz.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { ICategory } from '../../models/category.model';
+import { IQuiz } from '../../models/quiz.model';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -22,8 +22,24 @@ describe('DiscoverComponent', () => {
   ];
 
   const mockQuizzes: IQuiz[] = [
-    { id: 1, title: 'Quiz 1', questions: 10, uniqueCode: 'ABC123', difficulty: 'Easy', categoryId: 1, created: new Date() },
-    { id: 2, title: 'Quiz 2', questions: 15, uniqueCode: 'DEF456', difficulty: 'Medium', categoryId: 2, created: new Date() },
+    {
+      id: 1,
+      title: 'Quiz 1',
+      questions: 10,
+      uniqueCode: 'ABC123',
+      difficulty: 'Easy',
+      categoryId: 1,
+      created: new Date(),
+    },
+    {
+      id: 2,
+      title: 'Quiz 2',
+      questions: 15,
+      uniqueCode: 'DEF456',
+      difficulty: 'Medium',
+      categoryId: 2,
+      created: new Date(),
+    },
   ];
 
   const mockHttpResponse = new HttpResponse({
@@ -135,13 +151,13 @@ describe('DiscoverComponent', () => {
 
     it('should compute search params correctly', () => {
       component.searchOptions = {
-        categoryId: "1",
-        difficulty: "Easy",
+        categoryId: '1',
+        difficulty: 'Easy',
         page: 1,
-        questions: "10",
+        questions: '10',
         size: 6,
-        title: "Test Quiz",
-        sort_difficulty: 'ASC'
+        title: 'Test Quiz',
+        sort_difficulty: 'ASC',
       };
       const params = component.computeSearchParams();
       expect(params).toEqual(component.searchOptions);

@@ -13,7 +13,9 @@
     "build:prod": "ng build --configuration production",
     "start:prod": "http-server ./dist -a localhost -p 4200",
     "build-and-start:prod": "run-s build:prod start:prod",
-    "e2e": "start-server-and-test build-and-start:prod http://localhost:4200 cypress:run"
+    "e2e": "start-server-and-test build-and-start:prod http://localhost:4200 cypress:run",
+    "format": "prettier --write \"src/**/*.{ts,html,css,scss}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css,scss}\""
   },
   "private": true,
   "dependencies": {
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.4",
+    "@angular-eslint/eslint-plugin": "^18.3.0",
     "@angular/cli": "^17.3.4",
     "@angular/compiler-cli": "^17.3.0",
     "@types/canvas-confetti": "^1.6.4",
@@ -49,6 +52,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "karma-junit-reporter": "^2.0.1",
     "npm-run-all": "^4.1.5",
+    "prettier": "^3.3.3",
     "start-server-and-test": "^2.0.5",
     "tailwindcss": "^3.4.3",
     "typescript": "~5.4.2"

@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {QuizService} from "../../services/quiz.service";
-import {ICategory} from "../../models/category.model";
-import {HttpResponse} from "@angular/common/http";
-import {CommonModule} from "@angular/common";
-import {IQuiz} from "../../models/quiz.model";
-import {FormsModule} from "@angular/forms";
-import {ActivatedRoute, NavigationExtras, Router, RouterModule} from "@angular/router";
-import {initFlowbite} from "flowbite";
-import {API_BASEURL} from "../../app.constants";
-import {ToastrService} from "ngx-toastr";
+import { Component, OnInit } from '@angular/core';
+import { QuizService } from '../../services/quiz.service';
+import { ICategory } from '../../models/category.model';
+import { HttpResponse } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { IQuiz } from '../../models/quiz.model';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, NavigationExtras, Router, RouterModule } from '@angular/router';
+import { initFlowbite } from 'flowbite';
+import { API_BASEURL } from '../../app.constants';
+import { ToastrService } from 'ngx-toastr';
 
 
 interface SearchOptions {
@@ -27,7 +27,7 @@ interface SearchOptions {
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './discover.component.html',
-  styleUrl: './discover.component.scss'
+  styleUrl: './discover.component.scss',
 })
 export class DiscoverComponent implements OnInit {
 
@@ -40,14 +40,21 @@ export class DiscoverComponent implements OnInit {
   totalElements: number = 0;
   currentPage: number = 0;
   searchOptions: SearchOptions = {
-    categoryId: "", difficulty: "", page: 1, questions: "", size: 6, title: "", sort_difficulty: 'ASC', sort_created: 'DESC'
-  }
-
+    categoryId: '',
+    difficulty: '',
+    page: 1,
+    questions: '',
+    size: 6,
+    title: '',
+    sort_difficulty: 'ASC',
+    sort_created: 'DESC',
+  };
+  protected readonly API_BASEURL = API_BASEURL;
 
   constructor(private quizService: QuizService,
               private router: Router,
               private toastr: ToastrService,
-              private route: ActivatedRoute, ) {
+              private route: ActivatedRoute) {
   }
 
   computeSearchParams() {
@@ -56,14 +63,14 @@ export class DiscoverComponent implements OnInit {
       .reduce((acc, [key, value]) => {
         return {
           ...acc,
-          [key]: value
+          [key]: value,
         };
       }, {});
   }
 
   mergeSearchOptionsWithRouteQueryParams() {
     this.route.queryParams.subscribe(params => {
-      this.searchOptions = {...this.searchOptions, ...params};
+      this.searchOptions = { ...this.searchOptions, ...params };
     });
   }
 
@@ -74,7 +81,7 @@ export class DiscoverComponent implements OnInit {
     this.quizService.getAllCategories().subscribe({
       next: (resp: HttpResponse<ICategory[]>) => {
         this.categories = resp.body || [];
-      }
+      },
     });
     initFlowbite();
     this.loadQuizzes();
@@ -96,8 +103,8 @@ export class DiscoverComponent implements OnInit {
         // Update URL (so it contains search params)
         const queryParams: NavigationExtras = { queryParams: computedSearchParams };
         await this.router.navigate([], queryParams);
-      }
-    })
+      },
+    });
   }
 
   goToPage(event: Event, pageNum: number) {
@@ -172,7 +179,7 @@ export class DiscoverComponent implements OnInit {
       }
     }
 
-    return pageNumbers.sort((a,b) => a - b);
+    return pageNumbers.sort((a, b) => a - b);
   }
 
   onSearch() {
@@ -183,23 +190,21 @@ export class DiscoverComponent implements OnInit {
     this.searchOptions.title = '';
   }
 
-  onSortDifficulty(direction:string, event:Event) {
+  onSortDifficulty(direction: string, event: Event) {
     event.preventDefault();
     this.searchOptions.sort_difficulty = direction;
-    delete this.searchOptions.sort_created // they're mutually exclusive with sort_difficulty
+    delete this.searchOptions.sort_created; // they're mutually exclusive with sort_difficulty
     this.loadQuizzes();
   }
 
   onSortCreated(direction: string, event: Event) {
     event.preventDefault();
     this.searchOptions.sort_created = direction;
-    delete this.searchOptions.sort_difficulty // they're mutually exclusive with sort_created
+    delete this.searchOptions.sort_difficulty; // they're mutually exclusive with sort_created
     this.loadQuizzes();
   }
 
   getCategoryNameById(id: number) {
     return this.categories.find(c => c.id === id)?.name;
   }
-
-  protected readonly API_BASEURL = API_BASEURL;
 }

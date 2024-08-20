@@ -1,25 +1,25 @@
-import {Routes} from '@angular/router';
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Discover'
+      title: 'Discover',
     },
-    loadComponent: () => import('./pages/discover/discover.component').then(m => m.DiscoverComponent)
+    loadComponent: () => import('./pages/discover/discover.component').then(m => m.DiscoverComponent),
   },
   {
     path: 'create',
     data: {
-      title: 'Create'
+      title: 'Create',
     },
-    loadComponent: () => import('./pages/create/create.component').then(m => m.CreateComponent)
+    loadComponent: () => import('./pages/create/create.component').then(m => m.CreateComponent),
   },
   {
     path: 'play/:quizId',
     data: {
-      title: 'Play'
+      title: 'Play',
     },
-    loadComponent: () => import('./pages/play/play.component').then( m => m.PlayComponent)
-  }
+    loadComponent: () => import('./pages/play/play.component').then(m => m.PlayComponent),
+  },
 ];

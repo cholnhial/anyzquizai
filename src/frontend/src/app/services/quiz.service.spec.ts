@@ -1,12 +1,12 @@
-import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {QuizService} from './quiz.service';
-import {API_BASEURL} from '../app.constants';
-import {IQuizFull} from "../models/quiz-full.model";
-import {INewQuiz} from "../models/new-quiz.model";
-import {IScore} from "../models/score.model";
-import {IScoreSubmission} from "../models/score-submission.model";
-import {ICategory} from "../models/category.model";
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { QuizService } from './quiz.service';
+import { API_BASEURL } from '../app.constants';
+import { IQuizFull } from '../models/quiz-full.model';
+import { INewQuiz } from '../models/new-quiz.model';
+import { IScore } from '../models/score.model';
+import { IScoreSubmission } from '../models/score-submission.model';
+import { ICategory } from '../models/category.model';
 
 
 describe('QuizService', () => {
@@ -16,7 +16,7 @@ describe('QuizService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [QuizService]
+      providers: [QuizService],
     });
     service = TestBed.inject(QuizService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -41,7 +41,7 @@ describe('QuizService', () => {
           difficulty: 'medium',
           categoryId: 1,
           questions: [],
-          created: new Date()
+          created: new Date(),
         },
         {
           id: 2,
@@ -50,8 +50,8 @@ describe('QuizService', () => {
           difficulty: 'hard',
           categoryId: 2,
           questions: [],
-          created: new Date()
-        }
+          created: new Date(),
+        },
       ];
 
       const mockResponse = {
@@ -60,7 +60,7 @@ describe('QuizService', () => {
         last: false,
         totalPages: 5,
         totalElements: 50,
-        number: 0
+        number: 0,
       };
 
       const searchOptions = {
@@ -70,7 +70,7 @@ describe('QuizService', () => {
         categoryId: '1',
         difficulty: 'medium',
         questions: '10',
-        sort_created: 'desc'
+        sort_created: 'desc',
       };
 
       service.search(searchOptions).subscribe(response => {
@@ -87,7 +87,7 @@ describe('QuizService', () => {
     it('should return an array of categories', () => {
       const mockCategories: ICategory[] = [
         { id: 1, name: 'History' },
-        { id: 2, name: 'Science' }
+        { id: 2, name: 'Science' },
       ];
 
       service.getAllCategories().subscribe(response => {
@@ -116,11 +116,11 @@ describe('QuizService', () => {
               { answerLetter: 'A', answerTitle: 'George Washington' },
               { answerLetter: 'B', answerTitle: 'Thomas Jefferson' },
               { answerLetter: 'C', answerTitle: 'John Adams' },
-              { answerLetter: 'D', answerTitle: 'Benjamin Franklin' }
-            ]
-          }
+              { answerLetter: 'D', answerTitle: 'Benjamin Franklin' },
+            ],
+          },
         ],
-        created: new Date()
+        created: new Date(),
       };
 
       service.getQuizById(1).subscribe(response => {
@@ -139,7 +139,7 @@ describe('QuizService', () => {
         topic: 'New History Quiz',
         difficulty: 'easy',
         numberOfQuestions: 5,
-        categoryId: 1
+        categoryId: 1,
       };
 
       const createdQuiz: IQuizFull = {
@@ -149,7 +149,7 @@ describe('QuizService', () => {
         difficulty: 'easy',
         categoryId: 1,
         questions: [],
-        created: new Date()
+        created: new Date(),
       };
 
       service.create(newQuiz).subscribe(response => {
@@ -167,7 +167,7 @@ describe('QuizService', () => {
     it('should return scores for a quiz', () => {
       const mockScores: IScore[] = [
         { nickname: 'player1', totalCorrect: 8, totalQuestions: 10, score: 80, countryCode: 'US' },
-        { nickname: 'player2', totalCorrect: 9, totalQuestions: 10, score: 90, countryCode: 'UK' }
+        { nickname: 'player2', totalCorrect: 9, totalQuestions: 10, score: 90, countryCode: 'UK' },
       ];
 
       service.getQuizScoresById(1).subscribe(response => {
@@ -188,7 +188,7 @@ describe('QuizService', () => {
         totalCorrect: 17,
         totalQuestions: 20,
         score: 85,
-        countryCode: 'CA'
+        countryCode: 'CA',
       };
 
       service.submitScore(scoreSubmission).subscribe(response => {

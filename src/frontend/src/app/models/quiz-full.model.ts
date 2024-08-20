@@ -1,4 +1,4 @@
-import {IQuestion} from "./question.model";
+import { IQuestion } from './question.model';
 
 export interface IQuizFull {
   id: number;

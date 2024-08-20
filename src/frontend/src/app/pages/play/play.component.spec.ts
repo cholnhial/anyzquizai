@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {PlayComponent} from './play.component';
-import {ActivatedRoute} from '@angular/router';
-import {QuizService} from '../../services/quiz.service';
-import {ToastrService} from 'ngx-toastr';
-import {of, throwError} from 'rxjs';
-import {HttpResponse} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
-import {IScore} from '../../models/score.model';
-import {IQuizFull} from "../../models/quiz-full.model";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PlayComponent } from './play.component';
+import { ActivatedRoute } from '@angular/router';
+import { QuizService } from '../../services/quiz.service';
+import { ToastrService } from 'ngx-toastr';
+import { of, throwError } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { IScore } from '../../models/score.model';
+import { IQuizFull } from '../../models/quiz-full.model';
 
 describe('PlayComponent', () => {
   let component: PlayComponent;
@@ -32,8 +32,8 @@ describe('PlayComponent', () => {
             { answerLetter: 'A', answerTitle: '3' },
             { answerLetter: 'B', answerTitle: '4' },
             { answerLetter: 'C', answerTitle: '5' },
-            { answerLetter: 'D', answerTitle: '6' }
-          ]
+            { answerLetter: 'D', answerTitle: '6' },
+          ],
         },
         {
           question: 'What is the capital of France?',
@@ -42,15 +42,15 @@ describe('PlayComponent', () => {
             { answerLetter: 'A', answerTitle: 'London' },
             { answerLetter: 'B', answerTitle: 'Berlin' },
             { answerLetter: 'C', answerTitle: 'Paris' },
-            { answerLetter: 'D', answerTitle: 'Madrid' }
-          ]
-        }
-      ]
+            { answerLetter: 'D', answerTitle: 'Madrid' },
+          ],
+        },
+      ],
     },
     scores: [
       { nickname: 'Player1', totalCorrect: 2, totalQuestions: 2, score: 100, countryCode: 'us' },
-      { nickname: 'Player2', totalCorrect: 1, totalQuestions: 2, score: 50, countryCode: 'uk' }
-    ]
+      { nickname: 'Player2', totalCorrect: 1, totalQuestions: 2, score: 50, countryCode: 'uk' },
+    ],
   };
 
   beforeEach(async () => {
@@ -63,8 +63,8 @@ describe('PlayComponent', () => {
       providers: [
         { provide: QuizService, useValue: quizSpy },
         { provide: ToastrService, useValue: toastrSpy },
-        { provide: ActivatedRoute, useValue: routeSpy }
-      ]
+        { provide: ActivatedRoute, useValue: routeSpy },
+      ],
     }).compileComponents();
 
     quizServiceSpy = TestBed.inject(QuizService) as jasmine.SpyObj<QuizService>;
@@ -128,7 +128,13 @@ describe('PlayComponent', () => {
   });
 
   it('should submit score', () => {
-    const mockNewScore: IScore = { nickname: 'NewPlayer', totalCorrect: 2, totalQuestions: 2, score: 100, countryCode: 'fr' };
+    const mockNewScore: IScore = {
+      nickname: 'NewPlayer',
+      totalCorrect: 2,
+      totalQuestions: 2,
+      score: 100,
+      countryCode: 'fr',
+    };
     quizServiceSpy.submitScore.and.returnValue(of(new HttpResponse({ body: mockNewScore })));
     quizServiceSpy.getQuizScoresById.and.returnValue(of(new HttpResponse({ body: [...mockQuizWithScores.scores, mockNewScore] })));
 

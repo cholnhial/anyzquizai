@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {CreateComponent} from './create.component';
-import {QuizService} from '../../services/quiz.service';
-import {ToastrService} from 'ngx-toastr';
-import {of, throwError} from 'rxjs';
-import {HttpResponse} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
-import {IQuizFull} from "../../models/quiz-full.model";
-import {IAnswer} from "../../models/answer.model";
-import {IQuestion} from "../../models/question.model";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CreateComponent } from './create.component';
+import { QuizService } from '../../services/quiz.service';
+import { ToastrService } from 'ngx-toastr';
+import { of, throwError } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { IQuizFull } from '../../models/quiz-full.model';
+import { IAnswer } from '../../models/answer.model';
+import { IQuestion } from '../../models/question.model';
 
 describe('CreateComponent', () => {
   let component: CreateComponent;
@@ -23,8 +23,8 @@ describe('CreateComponent', () => {
       imports: [CreateComponent, FormsModule],
       providers: [
         { provide: QuizService, useValue: quizSpy },
-        { provide: ToastrService, useValue: toastrSpy }
-      ]
+        { provide: ToastrService, useValue: toastrSpy },
+      ],
     }).compileComponents();
 
     quizServiceSpy = TestBed.inject(QuizService) as jasmine.SpyObj<QuizService>;
@@ -62,8 +62,8 @@ describe('CreateComponent', () => {
         createMockQuestion('Question 2', 'B'),
         createMockQuestion('Question 3', 'C'),
         createMockQuestion('Question 4', 'D'),
-        createMockQuestion('Question 5', 'A')
-      ]
+        createMockQuestion('Question 5', 'A'),
+      ],
     };
 
     quizServiceSpy.create.and.returnValue(of(new HttpResponse({ body: mockQuizFull })));
@@ -103,7 +103,7 @@ describe('CreateComponent', () => {
       topic: '',
       categoryId: 18,
       difficulty: 'EASY',
-      numberOfQuestions: 10
+      numberOfQuestions: 10,
     });
   });
 
@@ -118,12 +118,12 @@ function createMockQuestion(questionText: string, correctAnswer: string): IQuest
     { answerLetter: 'A', answerTitle: 'Answer A' },
     { answerLetter: 'B', answerTitle: 'Answer B' },
     { answerLetter: 'C', answerTitle: 'Answer C' },
-    { answerLetter: 'D', answerTitle: 'Answer D' }
+    { answerLetter: 'D', answerTitle: 'Answer D' },
   ];
 
   return {
     question: questionText,
     correctAnswerLetter: correctAnswer,
-    answers: answers
+    answers: answers,
   };
 }
