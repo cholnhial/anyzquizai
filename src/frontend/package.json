@@ -29,7 +29,7 @@
     "@angular/router": "^17.3.0",
     "canvas-confetti": "^1.9.3",
     "flag-icons": "^7.2.3",
-    "flowbite": "^2.3.0",
+    "flowbite": "^2.4.1",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
