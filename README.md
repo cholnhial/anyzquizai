@@ -42,13 +42,18 @@ To run the application for development, follow these steps:
    ```
    export OPENAI_API_KEY="yourOpenAIKey"
    ```
+3. Create quiz photos directory
+```
+mkdir /var/quiz_photos
+chmod -R 777 /var/quiz_photos
+```
 
-3. Start the required services using Docker Compose:
+4. Start the required services using Docker Compose:
    ```
    docker-compose up -d
    ```
 
-4. Run the Spring Boot application:
+5. Run the Spring Boot application:
    ```
    ./mvnw spring-boot:run
    ```
