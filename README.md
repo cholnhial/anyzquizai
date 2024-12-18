@@ -34,7 +34,7 @@ Once you've discovered a quiz, you can play it and compete for a spot on the lea
 
 ## Getting Started
 
-To run the application for development, follow these steps:
+To run the application for development please use Java 21 (I recommend using SDKMAN), follow these steps:
 
 1. Ensure you have Docker installed on your system.
 
